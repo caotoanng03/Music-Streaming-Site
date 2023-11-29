@@ -9,8 +9,12 @@ database.connect();
 const app: Express = express();
 const port: string | number = process.env.PORT || 8000;
 
+// Template engine
+app.set("views", "./views");
+app.set("view engine", "pug");
+
 app.get("/genres", (req: Request, res: Response) => {
-    res.send("Chủ đề bài hát!");
+    res.render("client/pages/genres/index");
 });
 
 
