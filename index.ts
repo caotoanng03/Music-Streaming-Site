@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express, { Express, Request, Response} from "express";
 import dotenv from "dotenv";
 import * as database from "./config/database";
 
@@ -8,6 +8,10 @@ database.connect();
 
 const app: Express = express();
 const port: string | number = process.env.PORT || 8000;
+
+app.get("/genres", (req: Request, res: Response) => {
+    res.send("Chủ đề bài hát!");
+});
 
 
 app.listen(port, () => {
