@@ -1,14 +1,8 @@
 import { Express, Router, Request, Response } from "express";
 const router: Router = Router();
 
-import Genre from "../../models/genre.model";
+import * as controller from "../../controllers/client/genre.controller";
 
-router.get("/", async (req: Request, res: Response): Promise<void> => {
-
-    const genres = await Genre.find({ deleted: false });
-    console.log(genres);
-
-    res.render("client/pages/genres/index");
-});
+router.get("/", controller.index);
 
 export const genresRoutes: Router = router;
