@@ -1,8 +1,8 @@
-import express, { Express, Request, Response} from "express";
+import express, { Express} from "express";
 import dotenv from "dotenv";
 import * as database from "./config/database";
-import Genre from "./models/genre.model";
 
+import clientRoutes from "./routes/client/index.route";
 
 dotenv.config();
 database.connect();
@@ -15,14 +15,7 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 
 // Client Routes
-app.get("/genres", async (req: Request, res: Response): Promise<void> => {
-
-    const genres = await Genre.find({ deleted: false });
-    console.log(genres);
-
-    res.render("client/pages/genres/index");
-});
-
+clientRoutes(app);
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`);
