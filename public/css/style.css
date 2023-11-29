@@ -1,3 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 /* Header */
 .header {
     border-bottom: 1px solid #ddd;
@@ -34,6 +48,14 @@
 }
 
 /* End Footer */
+
+/* Main */
+/* css cho cái footer nằm ở dưới đáy */
+.main {
+    flex: 1;
+}
+
+/* End Main */
 
 /* box-head */
 .box-head {
