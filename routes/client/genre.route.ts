@@ -5,4 +5,4 @@ import * as controller from "../../controllers/client/genre.controller";
 
 router.get("/", controller.index);
 
-export const genresRoutes: Router = router;
+export const genreRoutes: Router = router;
