@@ -37,3 +37,42 @@ export const list = async (req: Request, res: Response): Promise<void> => {
         songs: songs
     });
 }
+
+// [GET] /songs/detail/:songSlug
+export const detail = async (req: Request, res: Response): Promise<void> => {
+
+    const song = await Song.findOne({
+        slug: req.params.songSlug,
+        status: "active",
+        deleted: false
+    });
+
+    if(!song) {
+        res.redirect(`back`);
+        return;
+    }
+
+    const singer = await Singer.findOne({
+        _id: song.singerId,
+        status: "active",
+        deleted: false
+    }).select("fullName avatar");
+
+    if(!singer) {
+        res.redirect(`back`);
+        return;
+    }
+
+    const genre = await Genre.findOne({
+        _id: song.topicId,
+        status: "active",
+        deleted: false
+    }).select("title");
+
+    res.render("client/pages/songs/detail", {
+        pageTitle: "Detail | " + song.title,
+        song: song,
+        singer: singer,
+        genre: genre
+    });
+}
