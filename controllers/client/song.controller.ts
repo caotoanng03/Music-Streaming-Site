@@ -76,3 +76,28 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         genre: genre
     });
 }
+
+// [PATCH] /songs/like/:typeLike/:songId
+export const like = async (req: Request, res: Response): Promise<void> => {
+    const songId: string = req.params.songId;
+    const typeLike: string = req.params.typeLike;
+
+    const song = await Song.findOne({
+        _id: songId,
+        status: "active",
+        deleted: false
+    });
+
+    const newLike = typeLike == "like" ? song.like + 1 : song.like - 1
+
+    await Song.updateOne({
+        _id: songId
+    }, { like: newLike });
+    // like: ["id_user1"], ["id-user2"]
+
+    res.json({
+        code: 400,
+        message: "Success",
+        like: newLike
+    });
+}
