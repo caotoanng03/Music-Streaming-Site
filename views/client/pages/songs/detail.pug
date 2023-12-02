@@ -18,8 +18,9 @@ block main
                         div(class="inner-action inner-like" button-like=song.id)
                             <i class="fa-regular fa-thumbs-up"></i> 
                             span #{song.like} Like
-                        div(class="inner-action inner-heart")
-                            <i class="fa-regular fa-heart"></i> Favorite song
+                        div(class=("inner-action inner-heart " + (song.isFavoriteSong ? "active" : "")) button-favorite=song.id)
+                            <i class="fa-regular fa-heart"></i> 
+                            span Favorite song
 
                     .inner-play
                         .inner-avatar

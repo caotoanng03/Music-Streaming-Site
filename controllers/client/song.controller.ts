@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Genre from "../../models/genre.model";
 import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
+import FavoriteSong from "../../models/favorite-song";
 
 // [GET] /songs/:slugGenre
 export const list = async (req: Request, res: Response): Promise<void> => {
@@ -14,7 +15,7 @@ export const list = async (req: Request, res: Response): Promise<void> => {
     if(!genre) {
         res.redirect("/genres");
         return;
-    }
+    };
 
     const songs = await Song.find({
         topicId: genre.id,
@@ -69,6 +70,13 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     }).select("title");
 
+    const favoriteSong = await FavoriteSong.findOne({
+        // userId: "",
+        songId: song.id
+    });
+    
+    song["isFavoriteSong"] = favoriteSong ? true : false;
+
     res.render("client/pages/songs/detail", {
         pageTitle: "Detail | " + song.title,
         song: song,
@@ -96,8 +104,45 @@ export const like = async (req: Request, res: Response): Promise<void> => {
     // like: ["id_user1"], ["id-user2"]
 
     res.json({
-        code: 400,
+        code: 200,
         message: "Success",
         like: newLike
+    });
+}
+
+// [PATCH] /songs/favorite/:favoriteType/:songId
+export const favorite = async (req: Request, res: Response): Promise<void> => {
+    const songId: string = req.params.songId;
+    const favoriteType: string = req.params.favoriteType;
+
+    switch(favoriteType) {
+        case "favorite":
+            const existingFavSong = await FavoriteSong.findOne({
+                songId: songId
+            });
+
+            if(!existingFavSong) {
+                const newFavSong = new FavoriteSong({
+                    // userId:
+                    songId: songId
+                });
+                await newFavSong.save();
+            };
+
+            break;
+
+        case "unfavorite":
+            await FavoriteSong.deleteOne({
+                songId: songId
+            });
+            break;
+        
+        default:
+            break;
+    }
+
+    res.json({
+        code: 200,
+        message: "Success"
     });
 }
