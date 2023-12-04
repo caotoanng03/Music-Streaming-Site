@@ -6,7 +6,26 @@ header.header
                     a(href="/")
                         img(src="/images/logo.svg" alt="Logo")
 
-            .col-9
+            .col-5
+                .box-search
+                form(
+                    action="/search/result"
+                    method="GET"
+                )
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Search..."
+                            class="form-control"
+                            name="keyword"
+                            value=keyword
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-secondary"
+                        ) Search
+
+            .col-4
                 .inner-menu
                     ul
                         li
