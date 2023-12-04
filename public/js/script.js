@@ -60,27 +60,29 @@ if (buttonLike) {
 // End Button Like
 
 // Button Favorite
-const buttonFavorite = document.querySelector("[button-favorite]");
-if (buttonFavorite) {
-    buttonFavorite.addEventListener("click", () => {
-        const songId = buttonFavorite.getAttribute("button-favorite");
-        const isActive = buttonFavorite.classList.contains("active");
+const listButtonFavorite = document.querySelectorAll("[button-favorite]");
+if (listButtonFavorite) {
+    listButtonFavorite.forEach(buttonFavorite => {
+        buttonFavorite.addEventListener("click", () => {
+            const songId = buttonFavorite.getAttribute("button-favorite");
+            const isActive = buttonFavorite.classList.contains("active");
 
-        const favoriteType = isActive ? "unfavorite" : "favorite";
+            const favoriteType = isActive ? "unfavorite" : "favorite";
 
-        const link = `/songs/favorite/${favoriteType}/${songId}`;
+            const link = `/songs/favorite/${favoriteType}/${songId}`;
 
-        const option = {
-            method: "PATCH"
-        };
+            const option = {
+                method: "PATCH"
+            };
 
-        fetch(link, option)
-            .then(res => res.json())
-            .then(data => {
-                if (data.code == 200) {
-                    buttonFavorite.classList.toggle("active");
-                }
-            });
+            fetch(link, option)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code == 200) {
+                        buttonFavorite.classList.toggle("active");
+                    }
+                });
+        });
     });
 };
 // End Button Favorite
