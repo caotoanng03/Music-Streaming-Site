@@ -3,8 +3,9 @@ import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
 import { convertToSlug } from "../../helpers/convertToSlug";
 
-// [GET] /search/result
+// [GET] /search/:type
 export const result = async (req: Request, res: Response): Promise<void> => {
+    const type: string = req.params.type;
     const keyword: string = `${req.query.keyword}`;
 
     let searchedSongs = [];
@@ -30,15 +31,38 @@ export const result = async (req: Request, res: Response): Promise<void> => {
                 deleted: false
             });
 
-            item["singerInfo"] = singerInfo;
+            // item["singerInfo"] = singerInfo;
+            searchedSongs.push({
+                id: item.id,
+                title: item.title,
+                avatar: item.avatar,
+                like: item.like,
+                slug: item.slug,
+                singerInfo: {
+                    fullName: singerInfo.fullName
+                }
+            });
         };   
         
-        searchedSongs = songs;
+        // searchedSongs = songs;
     }
 
-    res.render("client/pages/search/result", {
-        pageTitle: `Kết quả: ${keyword}`,
-        keyword: keyword,
-        songs: searchedSongs
-    })
+    switch(type) {
+        case "result":
+            res.render("client/pages/search/result", {
+                pageTitle: `Kết quả: ${keyword}`,
+                keyword: keyword,
+                songs: searchedSongs
+            })
+            break;
+        case "suggest":
+            res.json({
+                code: 200,
+                message: "Success!",
+                songs: searchedSongs
+            });
+            break;
+        default:
+            break;
+    }
 }
