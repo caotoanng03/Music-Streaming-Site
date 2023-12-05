@@ -27,7 +27,24 @@ if (aplayer) {
     ap.on("pause", function () {
         avatar.style.animationPlayState = "paused";
     });
-}
+
+    ap.on("ended", () => {
+        const link = `/songs/listen/${dataSong._id}`;
+
+        const option = {
+            method: "PATCH"
+        };
+
+        fetch(link, option)
+            .then(res => res.json())
+            .then(data => {
+                if (data.code == 200) {
+                    const listenElem = document.querySelector(".inner-listen span");
+                    listenElem.innerHTML = `${data.listen} streams`;
+                }
+            });
+    });
+};
 // End APlayer
 
 // Button Like

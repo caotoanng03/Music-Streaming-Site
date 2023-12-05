@@ -15,9 +15,12 @@ block main
                             <i class="fa-solid fa-microphone-lines"></i> #{singer.fullName}
                         div(class="inner-action inner-topic")
                             <i class="fa-solid fa-music"></i> #{genre.title}
+                        div(class="inner-action inner-listen")
+                            <i class="fa-solid fa-headphones"></i>
+                            span #{song.listen} streams
                         div(class="inner-action inner-like" button-like=song.id)
                             <i class="fa-regular fa-thumbs-up"></i> 
-                            span #{song.like} Like
+                            span #{song.like} like
                         div(class=("inner-action inner-heart " + (song.isFavoriteSong ? "active" : "")) button-favorite=song.id)
                             <i class="fa-regular fa-heart"></i> 
                             span Favorite song
