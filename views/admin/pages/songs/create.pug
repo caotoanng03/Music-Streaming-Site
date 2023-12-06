@@ -59,6 +59,18 @@ block main
                 class="image-preview"
                 upload-image-preview
             )
+        div(
+        class="form-group"
+        )
+            label(for="audio") Audio File
+            input(
+                type="file"
+                class="form-control-file"
+                id="audio"
+                name="audio"
+                accept="audio/*"
+            )
+
         div(class="form-group")
             label(for="desc") Description
             textarea(
