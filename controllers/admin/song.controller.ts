@@ -37,6 +37,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 // [POST] /admin/songs/create
 export const createPost = async (req: Request, res: Response): Promise<void> => {
+
     interface SongInter {
         title: string,
         topicId: string,
@@ -44,7 +45,8 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
         description?: string,
         status: string,
         avatar: string,
-        audio: string
+        audio: string,
+        lyrics?: string
     };
 
     let avatar = "";
@@ -65,7 +67,8 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
         description: req.body.description,
         status: req.body.status,
         avatar: avatar,
-        audio: audio
+        audio: audio,
+        lyrics: req.body.lyrics
     };
 
     const song = new Song(objectSong);

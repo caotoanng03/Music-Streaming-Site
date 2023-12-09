@@ -19,6 +19,7 @@ router.post(
         { name: "audio", maxCount: 1 }
     ]),
     uploadCloud.uploadFields,
-    controller.createPost);
+    controller.createPost
+);
 
 export const songRoutes: Router = router;

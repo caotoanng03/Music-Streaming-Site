@@ -8,11 +8,13 @@ if (aplayer) {
 
     const ap = new APlayer({
         container: aplayer,
+        lrcType: 1,
         audio: [{
             name: dataSong.title,
             artist: dataSinger.fullName,
             url: dataSong.audio,
-            cover: dataSinger.avatar
+            cover: dataSinger.avatar,
+            lrc: dataSong.lyrics
         }],
         autoplay: true,
         volumn: 0.8

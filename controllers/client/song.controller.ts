@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Genre from "../../models/genre.model";
 import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
-import FavoriteSong from "../../models/favorite-song";
+import FavoriteSong from "../../models/favorite-song.model";
 
 // [GET] /songs/:slugGenre
 export const list = async (req: Request, res: Response): Promise<void> => {
@@ -12,7 +12,7 @@ export const list = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     });
 
-    if(!genre) {
+    if (!genre) {
         res.redirect("/genres");
         return;
     };
@@ -22,7 +22,7 @@ export const list = async (req: Request, res: Response): Promise<void> => {
         status: "active",
         deleted: "false"
     }).select("title avatar singerId like slug");
-    
+
     for (const song of songs) {
         const singerInfo = await Singer.findOne({
             _id: song.singerId,
@@ -48,7 +48,7 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     });
 
-    if(!song) {
+    if (!song) {
         res.redirect(`back`);
         return;
     }
@@ -59,7 +59,7 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     }).select("fullName avatar");
 
-    if(!singer) {
+    if (!singer) {
         res.redirect(`back`);
         return;
     }
@@ -74,7 +74,7 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         // userId: "",
         songId: song.id
     });
-    
+
     song["isFavoriteSong"] = favoriteSong ? true : false;
 
     res.render("client/pages/songs/detail", {
@@ -115,13 +115,13 @@ export const favorite = async (req: Request, res: Response): Promise<void> => {
     const songId: string = req.params.songId;
     const favoriteType: string = req.params.favoriteType;
 
-    switch(favoriteType) {
+    switch (favoriteType) {
         case "favorite":
             const existingFavSong = await FavoriteSong.findOne({
                 songId: songId
             });
 
-            if(!existingFavSong) {
+            if (!existingFavSong) {
                 const newFavSong = new FavoriteSong({
                     // userId:
                     songId: songId
@@ -136,7 +136,7 @@ export const favorite = async (req: Request, res: Response): Promise<void> => {
                 songId: songId
             });
             break;
-        
+
         default:
             break;
     }
@@ -151,9 +151,9 @@ export const favorite = async (req: Request, res: Response): Promise<void> => {
 export const listen = async (req: Request, res: Response): Promise<void> => {
     const songId: string = req.params.songId;
 
-    const song = await Song.findOne({ _id : songId });
+    const song = await Song.findOne({ _id: songId });
 
-    if(song) {
+    if (song) {
         const listen: number = song.listen + 1;
 
         await Song.updateOne({
