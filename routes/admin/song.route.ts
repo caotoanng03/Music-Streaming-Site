@@ -22,4 +22,6 @@ router.post(
     controller.createPost
 );
 
+router.get("/edit/:id", controller.edit);
+
 export const songRoutes: Router = router;

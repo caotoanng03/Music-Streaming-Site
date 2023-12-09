@@ -76,3 +76,35 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
     res.redirect(`/${systemConfig.prefixAdmin}/songs`);
 };
+
+// [GET] /admin/songs/edit/:id
+export const edit = async (req: Request, res: Response): Promise<void> => {
+    const songId: string = `${req.params.id}`;
+    try {
+        const song = await Song.findOne({
+            _id: songId,
+            deleted: false
+        });
+
+
+        const genres = await Genre.find({
+            deleted: false,
+            status: "active"
+        }).select("title");
+
+        const singers = await Singer.find({
+            deleted: false,
+            status: "active"
+        }).select("fullName");
+
+        res.render(`admin/pages/songs/edit.pug`, {
+            pageTitle: `Edit Song`,
+            song,
+            genres,
+            singers
+        });
+
+    } catch (error) {
+        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+    };
+}
