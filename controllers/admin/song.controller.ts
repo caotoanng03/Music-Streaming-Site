@@ -3,6 +3,7 @@ import Song from "../../models/song.model";
 import Genre from "../../models/genre.model";
 import Singer from "../../models/singer.model";
 import { systemConfig } from "../../config/config";
+import { songRoutes } from "../../routes/admin/song.route";
 
 // [GET] /admin/songs/index
 export const index = async (req: Request, res: Response): Promise<void> => {
@@ -108,3 +109,49 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
     };
 }
+
+// [PATCH] /admin/songs/edit/:id
+export const editPatch = async (req: Request, res: Response): Promise<void> => {
+
+    const songId: string = `${req.params.id}`;
+
+    interface SongInter {
+        title: string,
+        topicId: string,
+        singerId: string,
+        description?: string,
+        status: string,
+        avatar?: string,
+        audio?: string,
+        lyrics?: string
+    };
+
+    const songData: SongInter = {
+        title: req.body.title,
+        topicId: req.body.topicId,
+        singerId: req.body.singerId,
+        description: req.body.description,
+        status: req.body.status,
+        lyrics: req.body.lyrics
+    };
+
+    if (req.body.avatar) {
+        songData["avatar"] = req.body.avatar[0];
+    };
+
+    if (req.body.audio) {
+        songData["audio"] = req.body.audio[0];
+    };
+
+    try {
+        await Song.updateOne({
+            _id: songId,
+        }, songData);
+
+        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+
+    } catch (error) {
+        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+    };
+
+};

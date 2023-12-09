@@ -1,6 +1,7 @@
-import express, { Express} from "express";
+import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
+import methodOverride from "method-override";
 import * as database from "./config/database";
 
 import adminRoutes from "./routes/admin/index.route";
@@ -20,6 +21,9 @@ app.use(express.static("public"));
 // Template engine
 app.set("views", "./views");
 app.set("view engine", "pug");
+
+// Method override
+app.use(methodOverride("_method"));
 
 // TinyMCE
 app.use(
