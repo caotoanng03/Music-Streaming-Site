@@ -6,8 +6,15 @@
   "scripts": {
     "start": "nodemon index.ts",
     "build": "tsc && node copy-dir.js",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +27,7 @@
     "mongoose": "^8.0.2",
     "mongoose-slug-updater": "^3.3.0",
     "multer": "^1.4.5-lts.1",
+    "pre-commit": "^1.2.2",
     "pug": "^3.0.2",
     "streamifier": "^0.1.1",
     "tinymce": "^6.8.1",

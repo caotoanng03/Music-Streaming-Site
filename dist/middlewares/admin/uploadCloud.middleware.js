@@ -23,7 +23,6 @@ const uploadSingle = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.uploadSingle = uploadSingle;
 const uploadFields = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req["files"]);
     for (const key in req["files"]) {
         req.body[key] = [];
         const array = req["files"][key];
