@@ -16,10 +16,10 @@ const app: Express = express();
 const port: string | number = process.env.PORT || 8000;
 
 // Static files
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 
 // Template engine
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // Method override
