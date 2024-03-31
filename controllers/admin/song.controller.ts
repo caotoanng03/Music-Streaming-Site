@@ -3,9 +3,9 @@ import Song from "../../models/song.model";
 import Genre from "../../models/genre.model";
 import Singer from "../../models/singer.model";
 import { systemConfig } from "../../config/config";
-import { songRoutes } from "../../routes/admin/song.route";
+import { title } from "process";
 
-// [GET] /admin/songs/index
+// [GET] /admin/songs
 export const index = async (req: Request, res: Response): Promise<void> => {
     const songs = await Song.find({
         deleted: false
@@ -155,3 +155,38 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
     };
 
 };
+
+// [GET] /admin/songs/detail/:id
+export const detail = async (req: Request, res: Response): Promise<void> => {
+    const songId: string = `${req.params.id}`;
+
+    try {
+        const song = await Song.findOne({
+            _id: songId,
+            deleted: false,
+            status: 'active'
+        });
+
+        const singer = await Singer.findOne({
+            _id: song.singerId,
+            deleted: false,
+            status: 'active'
+        }).select('fullName');
+
+        const genre = await Genre.findOne({
+            _id: song.topicId,
+            deleted: false,
+            status: 'active'
+        }).select('title');
+
+        res.render(`admin/pages/songs/detail.pug`, {
+            pageTitle: `${song['title']}`,
+            song,
+            singer,
+            genre
+        });
+
+    } catch (error) {
+        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+    }
+}

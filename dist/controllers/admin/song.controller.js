@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
+exports.detail = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
@@ -129,3 +129,33 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     ;
 });
 exports.editPatch = editPatch;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const songId = `${req.params.id}`;
+    try {
+        const song = yield song_model_1.default.findOne({
+            _id: songId,
+            deleted: false,
+            status: 'active'
+        });
+        const singer = yield singer_model_1.default.findOne({
+            _id: song.singerId,
+            deleted: false,
+            status: 'active'
+        }).select('fullName');
+        const genre = yield genre_model_1.default.findOne({
+            _id: song.topicId,
+            deleted: false,
+            status: 'active'
+        }).select('title');
+        res.render(`admin/pages/songs/detail.pug`, {
+            pageTitle: `${song['title']}`,
+            song,
+            singer,
+            genre
+        });
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
+    }
+});
+exports.detail = detail;

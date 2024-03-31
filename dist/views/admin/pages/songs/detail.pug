@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1(class="mb-4") #{pageTitle}
+
+    .mb-4 
+        strong Singer: 
+        span #{singer.fullName}
+
+    .mb-4 
+        strong Genre: 
+        span #{genre.title}
+
+    .mb-4 
+        img(
+            src=song.avatar 
+            alt=song.title
+            width=400
+        )
+
+    .mb-4
+        audio(controls upload-audio-play)
+            source(src=song.audio)
+
+    .mb-4 
+        strong Like: 
+        span #{song.like}
+
+    .mb-4 
+        strong Listen: 
+        span #{song.listen}
+
+
+
+    .mb-4 
+        strong Description:
+        textarea(
+            class="form-control"
+            id="desc"
+            name="description"
+            rows="5"
+            textarea-mce
+            readonly
+        )=song.description
+
+    if(song.lyrics)
+        .mb-4
+            strong Lyrics
+            textarea(
+                id="lyrics"
+                name="lyrics"
+                rows="20"
+                cols="197"
+                disabled 
+            )=song.lyrics
+
