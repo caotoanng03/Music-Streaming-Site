@@ -22,10 +22,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.genreRoutes = void 0;
 const express_1 = require("express");
 const router = (0, express_1.Router)();
+const multer_1 = __importDefault(require("multer"));
+const upload = (0, multer_1.default)();
 const controller = __importStar(require("../../controllers/admin/genre.controller"));
+const uploadCloud = __importStar(require("../../middlewares/admin/uploadCloud.middleware"));
 router.get("/", controller.index);
+router.get("/create", controller.create);
+router.post("/create", upload.single("avatar", 1), uploadCloud.uploadSingle, controller.createPost);
 exports.genreRoutes = router;

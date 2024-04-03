@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.index = void 0;
+exports.createPost = exports.create = exports.index = void 0;
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
+const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const genres = yield genre_model_1.default.find({
         deleted: false
@@ -24,3 +25,25 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.index = index;
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render('admin/pages/genres/create', {
+        pageTitle: `Create New Genre`
+    });
+});
+exports.create = create;
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let avatar = "";
+    if (req.body.avatar) {
+        avatar = req.body["avatar"];
+    }
+    const genreObject = {
+        title: req.body.title,
+        avatar: avatar,
+        description: req.body.description,
+        status: req.body.status
+    };
+    const genre = new genre_model_1.default(genreObject);
+    yield genre.save();
+    res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+});
+exports.createPost = createPost;
