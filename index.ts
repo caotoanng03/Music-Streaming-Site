@@ -18,6 +18,10 @@ const port: string | number = process.env.PORT || 8000;
 // Static files
 app.use(express.static(`${__dirname}/public`));
 
+// body-parser alternatively
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Template engine
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");

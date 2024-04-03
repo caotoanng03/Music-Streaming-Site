@@ -39,6 +39,8 @@ database.connect();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use(express_1.default.static(`${__dirname}/public`));
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use((0, method_override_1.default)("_method"));

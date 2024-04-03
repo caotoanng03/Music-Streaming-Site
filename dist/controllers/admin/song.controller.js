@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.detail = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
+exports.deleteSong = exports.detail = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
@@ -159,3 +159,18 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.detail = detail;
+const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const songId = `${req.params.id}`;
+    try {
+        yield song_model_1.default.updateOne({
+            _id: songId
+        }, {
+            deleted: true
+        });
+        res.redirect(`back`);
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
+    }
+});
+exports.deleteSong = deleteSong;

@@ -106,6 +106,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
         });
 
     } catch (error) {
+        // TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
     };
 }
@@ -151,6 +152,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
 
     } catch (error) {
+        // TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
     };
 
@@ -187,6 +189,25 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         });
 
     } catch (error) {
+        // TODO: redirect 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+    }
+}
+
+// [DELETE] /admin/songs/delete/:id
+export const deleteSong = async (req: Request, res: Response): Promise<void> => {
+    const songId: string = `${req.params.id}`;
+
+    try {
+        await Song.updateOne({
+            _id: songId
+        }, {
+            deleted: true
+        })
+
+        res.redirect(`back`);
+    } catch (error) {
+        // TODO: redirect 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
     }
 }
