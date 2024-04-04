@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import Genre from "../../models/genre.model";
 import { systemConfig } from "../../config/config";
+import { stringify } from "querystring";
 
 // [GET] /admin/genres/
 export const index = async (req: Request, res: Response): Promise<void> => {
@@ -41,7 +42,7 @@ export const createPost = async (req: Request, res: Response) => {
     const genreObject: GenreInter = {
         title: req.body.title,
         avatar: avatar,
-        description: req.body.description,
+        description: req.body.desc,
         status: req.body.status
     }
 
@@ -49,5 +50,60 @@ export const createPost = async (req: Request, res: Response) => {
     await genre.save();
 
     res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+
+}
+
+//[GET] /admin/genres/edit/:id
+export const edit = async (req: Request, res: Response) => {
+    const genreId: string = `${req.params.id}`;
+
+    try {
+        const genre = await Genre.findOne({
+            _id: genreId,
+            deleted: false,
+        });
+
+        res.render(`admin/pages/genres/edit`, {
+            pageTitle: `Edit Genre: ${genre['title']}`,
+            genre
+        })
+
+    } catch (error) {
+        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+    }
+}
+
+//[PATCH] /admin/genres/edit/:id
+export const editPatch = async (req: Request, res: Response): Promise<void> => {
+    const gerneID: string = `${req.params.id}`
+
+    interface GenreInter {
+        title: string,
+        avatar?: string,
+        description?: string
+        status: string
+    }
+
+    const genreObject: GenreInter = {
+        title: req.body.title,
+        description: req.body.desc,
+        status: req.body.status
+    }
+
+    if (req.body.avatar) {
+        genreObject.avatar = req.body.avatar;
+    };
+
+    try {
+
+        await Genre.updateOne({
+            _id: gerneID
+        }, genreObject)
+
+        res.redirect(`/${systemConfig.prefixAdmin}/genres`);
+
+    } catch (error) {
+        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+    }
 
 }

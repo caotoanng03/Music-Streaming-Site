@@ -166,19 +166,16 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         const song = await Song.findOne({
             _id: songId,
             deleted: false,
-            status: 'active'
         });
 
         const singer = await Singer.findOne({
             _id: song.singerId,
             deleted: false,
-            status: 'active'
         }).select('fullName');
 
         const genre = await Genre.findOne({
             _id: song.topicId,
             deleted: false,
-            status: 'active'
         }).select('title');
 
         res.render(`admin/pages/songs/detail.pug`, {

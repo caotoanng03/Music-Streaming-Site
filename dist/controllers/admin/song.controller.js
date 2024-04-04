@@ -135,17 +135,14 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const song = yield song_model_1.default.findOne({
             _id: songId,
             deleted: false,
-            status: 'active'
         });
         const singer = yield singer_model_1.default.findOne({
             _id: song.singerId,
             deleted: false,
-            status: 'active'
         }).select('fullName');
         const genre = yield genre_model_1.default.findOne({
             _id: song.topicId,
             deleted: false,
-            status: 'active'
         }).select('title');
         res.render(`admin/pages/songs/detail.pug`, {
             pageTitle: `${song['title']}`,

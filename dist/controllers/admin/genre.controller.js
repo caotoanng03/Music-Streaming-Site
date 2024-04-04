@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.create = exports.index = void 0;
+exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,7 +39,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const genreObject = {
         title: req.body.title,
         avatar: avatar,
-        description: req.body.description,
+        description: req.body.desc,
         status: req.body.status
     };
     const genre = new genre_model_1.default(genreObject);
@@ -47,3 +47,42 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
 });
 exports.createPost = createPost;
+const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const genreId = `${req.params.id}`;
+    try {
+        const genre = yield genre_model_1.default.findOne({
+            _id: genreId,
+            deleted: false,
+        });
+        res.render(`admin/pages/genres/edit`, {
+            pageTitle: `Edit Genre: ${genre['title']}`,
+            genre
+        });
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+    }
+});
+exports.edit = edit;
+const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const gerneID = `${req.params.id}`;
+    const genreObject = {
+        title: req.body.title,
+        description: req.body.desc,
+        status: req.body.status
+    };
+    if (req.body.avatar) {
+        genreObject.avatar = req.body.avatar;
+    }
+    ;
+    try {
+        yield genre_model_1.default.updateOne({
+            _id: gerneID
+        }, genreObject);
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+    }
+});
+exports.editPatch = editPatch;
