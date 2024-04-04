@@ -13,8 +13,10 @@ exports.uploadFields = exports.uploadSingle = void 0;
 const uploadToCloudinary_1 = require("../../helpers/uploadToCloudinary");
 const uploadSingle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield (0, uploadToCloudinary_1.uploadToCloudinary)(req["file"].buffer);
-        req.body[req["file"].fieldname] = result;
+        if (req["file"]) {
+            const result = yield (0, uploadToCloudinary_1.uploadToCloudinary)(req["file"].buffer);
+            req.body[req["file"].fieldname] = result;
+        }
     }
     catch (error) {
         console.log(error);

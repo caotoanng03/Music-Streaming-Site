@@ -35,9 +35,9 @@ const controller = __importStar(require("../../controllers/admin/genre.controlle
 const uploadCloud = __importStar(require("../../middlewares/admin/uploadCloud.middleware"));
 router.get("/", controller.index);
 router.get("/create", controller.create);
-router.post("/create", upload.single("avatar", 1), uploadCloud.uploadSingle, controller.createPost);
+router.post("/create", upload.single("avatar"), uploadCloud.uploadSingle, controller.createPost);
 router.get("/edit/:id", controller.edit);
-router.patch("/edit/:id", upload.single("avatar", 1), uploadCloud.uploadSingle, controller.editPatch);
+router.patch("/edit/:id", upload.single("avatar"), uploadCloud.uploadSingle, controller.editPatch);
 router.delete("/delete/:id", controller.deleteGenre);
 router.get("/detail/:id", controller.detail);
 exports.genreRoutes = router;

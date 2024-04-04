@@ -93,7 +93,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
     }
 
     if (req.body.avatar) {
-        genreObject.avatar = req.body.avatar;
+        genreObject["avatar"] = req.body.avatar;
     };
 
     try {

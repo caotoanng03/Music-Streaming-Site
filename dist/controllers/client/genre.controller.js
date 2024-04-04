@@ -15,7 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const genres = yield genre_model_1.default.find({ deleted: false });
+    const genres = yield genre_model_1.default.find({
+        deleted: false,
+        status: "active"
+    });
     res.render("client/pages/genres/index", {
         pageTitle: "Genres",
         genres: genres

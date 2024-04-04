@@ -73,7 +73,7 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         status: req.body.status
     };
     if (req.body.avatar) {
-        genreObject.avatar = req.body.avatar;
+        genreObject["avatar"] = req.body.avatar;
     }
     ;
     try {

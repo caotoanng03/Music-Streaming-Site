@@ -9,10 +9,15 @@ block main
 
         .row
             each genre in genres
-                .col-6.mb-3
+                .col-3.mb-3
                     div(class="card")
-                        img(src=genre.avatar)
+                        a(href=`/songs/${genre.slug}`) 
+                            img(
+                                src=genre.avatar
+                                width=auto
+                                height=250
+                            )
                         div(class="card-body")
                             h5(class="card-title") #{genre.title}
-                            p(class="card-text") #{genre.description}
-                            a(href=`/songs/${genre.slug}` class="btn btn-primary") Xem chi tiết
+                            p(class="card-text") !{genre.description}
+                            //- a(href=`/songs/${genre.slug}` class="btn btn-primary") View

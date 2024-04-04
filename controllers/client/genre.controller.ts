@@ -3,7 +3,10 @@ import Genre from "../../models/genre.model";
 
 // [GET] /genres
 export const index = async (req: Request, res: Response): Promise<void> => {
-    const genres = await Genre.find({ deleted: false });
+    const genres = await Genre.find({
+        deleted: false,
+        status: "active"
+    });
 
     res.render("client/pages/genres/index", {
         pageTitle: "Genres",
