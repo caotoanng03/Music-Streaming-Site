@@ -30,4 +30,6 @@ router.patch(
 
 router.delete("/delete/:id", controller.deleteGenre);
 
+router.get("/detail/:id", controller.detail);
+
 export const genreRoutes: Router = router;

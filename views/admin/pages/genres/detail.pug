@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1(class="mb-4")=pageTitle 
+
+    .mb-4
+        strong Status: 
+        span #{genre.status}
+
+    .mb-4 
+        strong Number of songs: 
+        span #{genre.totalSongInGenre}
+
+    if(genre.numberOfSongs)
+        .mb-4 
+            strong Number of songs:
+            span  #{genre.numberOfSongs}
+
+    if(genre.avatar)
+        .mb-4
+            img(
+                id="image"
+                name="image"
+                src=genre.avatar
+                width=250
+                height=auto
+            )
+
+    if(genre.description)
+        .mb-4
+            p 
+                strong Description
+            textarea(
+                id="desc"
+                name="desc"
+                disabled
+                textarea-mce
+            )=genre.description 
+

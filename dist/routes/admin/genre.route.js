@@ -39,4 +39,5 @@ router.post("/create", upload.single("avatar", 1), uploadCloud.uploadSingle, con
 router.get("/edit/:id", controller.edit);
 router.patch("/edit/:id", upload.single("avatar", 1), uploadCloud.uploadSingle, controller.editPatch);
 router.delete("/delete/:id", controller.deleteGenre);
+router.get("/detail/:id", controller.detail);
 exports.genreRoutes = router;

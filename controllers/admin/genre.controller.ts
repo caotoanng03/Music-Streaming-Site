@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import Genre from "../../models/genre.model";
 import { systemConfig } from "../../config/config";
 import { stringify } from "querystring";
+import Song from "../../models/song.model";
 
 // [GET] /admin/genres/
 export const index = async (req: Request, res: Response): Promise<void> => {
@@ -121,6 +122,34 @@ export const deleteGenre = async (req: Request, res: Response): Promise<void> =>
         });
 
         res.redirect(`back`)
+    } catch (error) {
+        // TODO: redirect to 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+    }
+}
+
+//[GET] /admin/genres/detail/:id
+export const detail = async (req: Request, res: Response): Promise<void> => {
+    const genreID: string = `${req.params.id}`;
+
+    try {
+        let genre = await Genre.findOne({
+            _id: genreID,
+            deleted: false
+        });
+
+        const totalSongInGenre = await Song.countDocuments({
+            topicId: genreID,
+            deleted: false
+        });
+
+        genre["totalSongInGenre"] = totalSongInGenre;
+
+        res.render(`admin/pages/genres/detail`, {
+            pageTitle: genre.title,
+            genre
+        })
+
     } catch (error) {
         // TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/genres`)

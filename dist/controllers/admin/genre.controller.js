@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteGenre = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
+exports.detail = exports.deleteGenre = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const config_1 = require("../../config/config");
+const song_model_1 = __importDefault(require("../../models/song.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const genres = yield genre_model_1.default.find({
         deleted: false
@@ -101,3 +102,25 @@ const deleteGenre = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deleteGenre = deleteGenre;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const genreID = `${req.params.id}`;
+    try {
+        let genre = yield genre_model_1.default.findOne({
+            _id: genreID,
+            deleted: false
+        });
+        const totalSongInGenre = yield song_model_1.default.countDocuments({
+            topicId: genreID,
+            deleted: false
+        });
+        genre["totalSongInGenre"] = totalSongInGenre;
+        res.render(`admin/pages/genres/detail`, {
+            pageTitle: genre.title,
+            genre
+        });
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+    }
+});
+exports.detail = detail;
