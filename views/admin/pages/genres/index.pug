@@ -65,3 +65,9 @@ block main
                                     button-delete
                                     data-id=item.id
                                 ) Delete
+            form(
+                id="form-delete-item"
+                action=""
+                method="POST"
+                data-path=`/${prefixAdmin}/genres/delete`
+            )

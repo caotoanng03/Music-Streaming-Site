@@ -32,7 +32,7 @@ if (uploadAudio) {
 }
 // End Upload Audio
 
-// Delete Song Item
+// Button Delete Item
 const deleteButtons = document.querySelectorAll("[button-delete]");
 if (deleteButtons.length > 0) {
     const formDeleteItem = document.getElementById("form-delete-item");
@@ -55,4 +55,4 @@ if (deleteButtons.length > 0) {
     })
 
 }
-// End Delete Song Item
+// End Button Delete Item

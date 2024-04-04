@@ -69,6 +69,7 @@ export const edit = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
+        // TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/genres`)
     }
 }
@@ -106,4 +107,22 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
         res.redirect(`/${systemConfig.prefixAdmin}/genres`)
     }
 
+}
+
+//[DELETE] /admin/genres/delete/:id
+export const deleteGenre = async (req: Request, res: Response): Promise<void> => {
+    const genreID = `${req.params.id}`;
+
+    try {
+        await Genre.updateOne({
+            _id: genreID
+        }, {
+            deleted: true
+        });
+
+        res.redirect(`back`)
+    } catch (error) {
+        // TODO: redirect to 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+    }
 }

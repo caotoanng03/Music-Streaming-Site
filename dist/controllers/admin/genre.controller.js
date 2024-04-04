@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
+exports.deleteGenre = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -86,3 +86,18 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.editPatch = editPatch;
+const deleteGenre = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const genreID = `${req.params.id}`;
+    try {
+        yield genre_model_1.default.updateOne({
+            _id: genreID
+        }, {
+            deleted: true
+        });
+        res.redirect(`back`);
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+    }
+});
+exports.deleteGenre = deleteGenre;
