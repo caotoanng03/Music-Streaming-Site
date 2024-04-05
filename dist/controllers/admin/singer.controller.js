@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.create = exports.index = void 0;
+exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,3 +47,41 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
 });
 exports.createPost = createPost;
+const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const singerID = `${req.params.id}`;
+    try {
+        const singer = yield singer_model_1.default.findOne({
+            _id: singerID,
+            deleted: false
+        });
+        res.render(`admin/pages/singers/edit`, {
+            pageTitle: "Edit Singer",
+            singer
+        });
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
+    }
+});
+exports.edit = edit;
+const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const singerID = `${req.params.id}`;
+    const singerData = {
+        fullName: req.body.fullName,
+        status: req.body.status
+    };
+    if (req.body.avatar) {
+        singerData["avatar"] = req.body.avatar;
+    }
+    try {
+        yield singer_model_1.default.updateOne({
+            _id: singerID,
+            deleted: false
+        }, singerData);
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
+    }
+});
+exports.editPatch = editPatch;
