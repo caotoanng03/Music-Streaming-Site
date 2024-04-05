@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.index = void 0;
+exports.createPost = exports.create = exports.index = void 0;
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
+const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const singers = yield singer_model_1.default.find({
         deleted: false
@@ -24,3 +25,25 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.index = index;
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render(`admin/pages/singers/create`, {
+        pageTitle: "New Singer"
+    });
+});
+exports.create = create;
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    ;
+    let avatar = "";
+    if (req.body.avatar) {
+        avatar = req.body.avatar;
+    }
+    const singerData = {
+        fullName: req.body.fullName,
+        avatar: avatar,
+        status: req.body.status
+    };
+    const singer = new singer_model_1.default(singerData);
+    yield singer.save();
+    res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
+});
+exports.createPost = createPost;
