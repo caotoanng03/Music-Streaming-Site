@@ -67,3 +67,11 @@ block main
                                         data-id=item.id
                                         button-delete
                                     ) Delete
+
+
+            form(
+                id="form-delete-item"
+                action=""
+                data-path=`/${prefixAdmin}/singers/delete`
+                method="POST"
+            )

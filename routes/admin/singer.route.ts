@@ -27,5 +27,7 @@ router.patch(
     controller.editPatch
 )
 
+router.delete('/delete/:id', controller.deleteSinger);
+
 
 export const singerRoutes: Router = router;

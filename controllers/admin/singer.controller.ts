@@ -100,3 +100,22 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
         res.redirect(`/${systemConfig.prefixAdmin}/singers`);
     }
 }
+
+// [DELETE] /admin/singers/delete/:id
+export const deleteSinger = async (req: Request, res: Response): Promise<void> => {
+    const singerId = `${req.params.id}`;
+
+    try {
+        await Singer.updateOne({
+            _id: singerId,
+            deleted: false
+        }, {
+            deleted: true
+        })
+
+        res.redirect(`back`);
+    } catch (error) {
+        // TODO: redirect to 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/singers`);
+    }
+}
