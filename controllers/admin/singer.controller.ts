@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Singer from "../../models/singer.model";
 import { systemConfig } from "../../config/config";
+import Song from "../../models/song.model";
 
 
 // [GET] /admin/singers
@@ -51,7 +52,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/singers/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
-    const singerID = `${req.params.id}`;
+    const singerID: string = `${req.params.id}`;
     try {
         const singer = await Singer.findOne({
             _id: singerID,
@@ -70,7 +71,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/singers/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
-    const singerID = `${req.params.id}`;
+    const singerID: string = `${req.params.id}`;
 
     interface singerInter {
         fullName: string
@@ -103,7 +104,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 // [DELETE] /admin/singers/delete/:id
 export const deleteSinger = async (req: Request, res: Response): Promise<void> => {
-    const singerId = `${req.params.id}`;
+    const singerId: string = `${req.params.id}`;
 
     try {
         await Singer.updateOne({
@@ -118,4 +119,34 @@ export const deleteSinger = async (req: Request, res: Response): Promise<void> =
         // TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/singers`);
     }
+}
+
+// [GET] /admin/singers/detail/:id
+export const detail = async (req: Request, res: Response): Promise<void> => {
+    const singerID: string = `${req.params.id}`;
+
+    try {
+        const singer = await Singer.findOne({
+            _id: singerID,
+            deleted: false
+        })
+
+        const totalSongs = await Song.countDocuments({
+            singerId: singerID,
+            deleted: false
+        });
+
+        singer['totalSongs'] = totalSongs || 0;
+
+        res.render(`admin/pages/singers/detail`, {
+            pageTitle: `Singer Details`,
+            singer
+        })
+
+    } catch (error) {
+        // TODO: redirect to 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/singers`);
+    }
+
+
 }

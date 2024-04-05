@@ -39,4 +39,5 @@ router.post('/create', upload.single("avatar"), uploadCloud.uploadSingle, contro
 router.get('/edit/:id', controller.edit);
 router.patch('/edit/:id', upload.single('avatar'), uploadCloud.uploadSingle, controller.editPatch);
 router.delete('/delete/:id', controller.deleteSinger);
+router.get('/detail/:id', controller.detail);
 exports.singerRoutes = router;

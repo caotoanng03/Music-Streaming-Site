@@ -3,6 +3,8 @@ extends ../../layouts/default.pug
 block main 
     h1(class="mb-4") #{pageTitle}
 
+    hr
+
     .mb-4 
         strong Singer: 
         span #{singer.fullName}
@@ -11,16 +13,17 @@ block main
         strong Genre: 
         span #{genre.title}
 
-    .mb-4 
+    if(song.avatar)
+        .mb-4 
         img(
             src=song.avatar 
             alt=song.title
             width=400
         )
-
-    .mb-4
-        audio(controls upload-audio-play)
-            source(src=song.audio)
+    if(song.audio)
+        .mb-4
+            audio(controls upload-audio-play)
+                source(src=song.audio)
 
     .mb-4 
         strong Like: 
@@ -31,17 +34,17 @@ block main
         span #{song.listen}
 
 
-
-    .mb-4 
-        strong Description:
-        textarea(
-            class="form-control"
-            id="desc"
-            name="description"
-            rows="5"
-            textarea-mce
-            readonly
-        )=song.description
+    if(song.description)
+        .mb-4 
+            strong Description:
+            textarea(
+                class="form-control"
+                id="desc"
+                name="description"
+                rows="5"
+                textarea-mce
+                readonly
+            )=song.description
 
     if(song.lyrics)
         .mb-4

@@ -29,5 +29,7 @@ router.patch(
 
 router.delete('/delete/:id', controller.deleteSinger);
 
+router.get('/detail/:id', controller.detail);
+
 
 export const singerRoutes: Router = router;
