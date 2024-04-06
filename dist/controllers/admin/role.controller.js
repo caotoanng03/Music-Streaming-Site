@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.index = void 0;
+exports.createPost = exports.create = exports.index = void 0;
 const role_model_1 = __importDefault(require("../../models/role.model"));
+const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const roles = (yield role_model_1.default.find({
         deleted: false
@@ -24,3 +25,23 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.index = index;
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render(`admin/pages/roles/create`, {
+        pageTitle: "New Role Group"
+    });
+});
+exports.create = create;
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let desc = "";
+    if (req.body.desc) {
+        desc = req.body.desc;
+    }
+    const roleData = {
+        title: req.body.title,
+        description: desc
+    };
+    const newRole = new role_model_1.default(roleData);
+    yield newRole.save();
+    res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+});
+exports.createPost = createPost;
