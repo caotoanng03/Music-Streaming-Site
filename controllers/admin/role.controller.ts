@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Role from "../../models/role.model";
 import { systemConfig } from "../../config/config";
-import { stringify } from "querystring";
 
 // [GET] /admin/roles
 export const index = async (req: Request, res: Response): Promise<void> => {
@@ -133,4 +132,31 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         // TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/roles`)
     }
+}
+
+// [GET] /admin/permissions
+export const permissions = async (req: Request, res: Response): Promise<void> => {
+    const roles = await Role.find({
+        deleted: false
+    });
+
+    res.render(`admin/pages/roles/permissions`, {
+        pageTitle: "Access Control Panel",
+        roles
+    })
+}
+
+// [PATCH] /admin/permissions
+export const permissionsPatch = async (req: Request, res: Response): Promise<void> => {
+    const permissions = JSON.parse(req.body.permissions);
+
+    for (const item of permissions) {
+        await Role.updateOne({
+            _id: item.id
+        }, {
+            permissions: item.permissions
+        });
+    }
+
+    res.redirect(`back`);
 }
