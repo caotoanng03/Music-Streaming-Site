@@ -6,6 +6,7 @@ const genre_route_1 = require("./genre.route");
 const song_route_1 = require("./song.route");
 const upload_route_1 = require("./upload.route");
 const singer_route_1 = require("./singer.route");
+const role_route_1 = require("./role.route");
 const adminRoutes = (app) => {
     const PATH_ADMIN = `/${config_1.systemConfig.prefixAdmin}`;
     app.use(`${PATH_ADMIN}/dashboard`, dashboard_route_1.dashboardRoutes);
@@ -13,5 +14,6 @@ const adminRoutes = (app) => {
     app.use(`${PATH_ADMIN}/songs`, song_route_1.songRoutes);
     app.use(`${PATH_ADMIN}/upload`, upload_route_1.uploadRoutes);
     app.use(`${PATH_ADMIN}/singers`, singer_route_1.singerRoutes);
+    app.use(`${PATH_ADMIN}/roles`, role_route_1.roleRoutes);
 };
 exports.default = adminRoutes;
