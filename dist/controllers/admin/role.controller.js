@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.create = exports.index = void 0;
+exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const role_model_1 = __importDefault(require("../../models/role.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -45,3 +45,35 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
 });
 exports.createPost = createPost;
+const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const roleID = `${req.params.id}`;
+    try {
+        const role = yield role_model_1.default.findOne({
+            _id: roleID,
+            deleted: false
+        });
+        res.render(`admin/pages/roles/edit`, {
+            pageTitle: `Edit Role Group ${role.title}`,
+            role
+        });
+    }
+    catch (error) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+    }
+});
+exports.edit = edit;
+const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const roleID = `${req.params.id}`;
+    const roleData = {
+        title: req.body.title
+    };
+    if (req.body.desc) {
+        roleData['description'] = req.body.desc;
+    }
+    yield role_model_1.default.updateOne({
+        _id: roleID,
+        deleted: false
+    }, roleData);
+    res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+});
+exports.editPatch = editPatch;
