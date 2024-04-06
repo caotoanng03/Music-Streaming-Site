@@ -1,7 +1,7 @@
 doctype html
 html
     head
-        title #{pageTitle}
+        title #{pageTitle}        
         //- bootstrap
         link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css")
         //- fontawesome
@@ -24,6 +24,9 @@ html
             block main
 
         include ../partials/footer.pug
+
+        //- lodash
+        script(src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js")
 
         //- bootstap
         script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
