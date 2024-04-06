@@ -48,7 +48,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/roles/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
-    const roleID = `${req.params.id}`;
+    const roleID: string = `${req.params.id}`;
 
     try {
         const role = await Role.findOne({
@@ -70,7 +70,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/roles/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
-    const roleID = `${req.params.id}`;
+    const roleID: string = `${req.params.id}`;
 
     interface RoleInter {
         title: string,
@@ -93,3 +93,44 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
     res.redirect(`/${systemConfig.prefixAdmin}/roles`);
 }
 
+// [DELETE] /admin/roles/delete/:id
+export const deleteRole = async (req: Request, res: Response): Promise<void> => {
+    const roleID: string = `${req.params.id}`;
+
+    try {
+
+        await Role.updateOne({
+            _id: roleID
+        }, {
+            deleted: true
+        });
+
+        res.redirect(`back`)
+
+    } catch (error) {
+        // TODO: redirect to 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`)
+    }
+}
+
+// [GET] /admin/roles/detail/:id
+export const detail = async (req: Request, res: Response): Promise<void> => {
+    const roleID: string = `${req.params.id}`;
+
+    try {
+
+        const role = await Role.findOne({
+            _id: roleID,
+            deleted: false
+        })
+
+        res.render(`admin/pages/roles/detail`, {
+            pageTitle: `Detail - ${role.title}`,
+            role
+        })
+
+    } catch (error) {
+        // TODO: redirect to 404 page
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`)
+    }
+}

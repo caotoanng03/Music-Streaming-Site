@@ -14,4 +14,8 @@ router.get('/edit/:id', controller.edit);
 
 router.patch('/edit/:id', controller.editPatch);
 
+router.delete('/delete/:id', controller.deleteRole);
+
+router.get('/detail/:id', controller.detail);
+
 export const roleRoutes: Router = router;
