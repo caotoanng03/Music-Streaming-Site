@@ -25,6 +25,11 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
         deleted: false
     }).select('title permissions');
 
+    if (role.permissions.length == 0) {
+        res.redirect(`/${systemConfig.prefixAdmin}/auth/login`);
+        return;
+    }
+
     res.locals.admin = account;
     res.locals.role = role;
 

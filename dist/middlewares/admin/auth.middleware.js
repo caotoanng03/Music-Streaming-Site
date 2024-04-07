@@ -34,6 +34,10 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         _id: account.roleId,
         deleted: false
     }).select('title permissions');
+    if (role.permissions.length == 0) {
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/auth/login`);
+        return;
+    }
     res.locals.admin = account;
     res.locals.role = role;
     next();

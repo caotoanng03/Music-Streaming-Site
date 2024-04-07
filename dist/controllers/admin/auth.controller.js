@@ -16,23 +16,31 @@ exports.logout = exports.loginPost = exports.login = void 0;
 const account_model_1 = __importDefault(require("../../models/account.model"));
 const md5_1 = __importDefault(require("md5"));
 const config_1 = require("../../config/config");
+const role_model_1 = __importDefault(require("../../models/role.model"));
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies.token;
-    if (token) {
-        const account = yield account_model_1.default.findOne({
-            token: token,
-            deleted: false,
-            status: 'active'
-        }).select('-password -token');
-        if (account) {
-            res.redirect(`/${config_1.systemConfig.prefixAdmin}/dashboard`);
-        }
-    }
-    else {
+    if (!token) {
         res.render(`admin/pages/auth/login`, {
             pageTitle: "Log In"
         });
+        return;
     }
+    const account = yield account_model_1.default.findOne({
+        token: token,
+        deleted: false,
+        status: 'active'
+    }).select('-password -token');
+    const role = yield role_model_1.default.findOne({
+        _id: account.roleId,
+        deleted: false
+    }).select('permissions');
+    if (!account || role.permissions.length == 0) {
+        res.render(`admin/pages/auth/login`, {
+            pageTitle: "Log In"
+        });
+        return;
+    }
+    res.redirect(`/${config_1.systemConfig.prefixAdmin}/dashboard`);
 });
 exports.login = login;
 const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

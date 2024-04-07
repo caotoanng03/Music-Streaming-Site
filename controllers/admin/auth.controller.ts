@@ -2,27 +2,39 @@ import { Request, Response } from "express";
 import Account from "../../models/account.model";
 import md5 from "md5";
 import { systemConfig } from "../../config/config";
+import Role from "../../models/role.model";
 
 // [GET] /admin/auth/login
 export const login = async (req: Request, res: Response): Promise<void> => {
-    // dont use `${}` here because if it dont have, return 'undefine', then if(token) -> true
+    // `${}` is not ok here cause if token is empty, return 'undefine', then if(token) -> true
     const token = req.cookies.token;
 
-    if (token) {
-        const account = await Account.findOne({
-            token: token,
-            deleted: false,
-            status: 'active'
-        }).select('-password -token');
-
-        if (account) {
-            res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
-        }
-    } else {
+    if (!token) {
         res.render(`admin/pages/auth/login`, {
             pageTitle: "Log In"
         });
+        return;
     }
+
+    const account = await Account.findOne({
+        token: token,
+        deleted: false,
+        status: 'active'
+    }).select('-password -token');
+
+    const role = await Role.findOne({
+        _id: account.roleId,
+        deleted: false
+    }).select('permissions');
+
+    if (!account || role.permissions.length == 0) {
+        res.render(`admin/pages/auth/login`, {
+            pageTitle: "Log In"
+        });
+        return;
+    }
+
+    res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
 
 }
 
