@@ -8,10 +8,17 @@ import { uploadRoutes } from "./upload.route";
 import { singerRoutes } from "./singer.route";
 import { roleRoutes } from "./role.route";
 import { accountRoutes } from "./account.route";
+import { authRoutes } from "./auth.route";
+
+import * as authController from "../../controllers/admin/auth.controller";
 
 const adminRoutes = (app: Express): void => {
 
     const PATH_ADMIN = `/${systemConfig.prefixAdmin}`;
+
+    app.get(PATH_ADMIN, authController.login);
+
+    app.use(`${PATH_ADMIN}/auth`, authRoutes);
 
     app.use(`${PATH_ADMIN}/dashboard`, dashboardRoutes);
 

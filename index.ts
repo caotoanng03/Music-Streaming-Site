@@ -1,6 +1,9 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
+import flash from "express-flash"
+import cookieParser from "cookie-parser"
+import session from "express-session"
 import methodOverride from "method-override";
 import * as database from "./config/database";
 
@@ -25,6 +28,11 @@ app.use(express.urlencoded({ extended: true }));
 // Template engine
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
+
+// Flash
+app.use(cookieParser('ALITTLEBOZ'));
+app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(flash());
 
 // Method override
 app.use(methodOverride("_method"));
