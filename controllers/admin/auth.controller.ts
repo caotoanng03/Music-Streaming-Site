@@ -61,7 +61,5 @@ export const loginPost = async (req, res: Response): Promise<void> => {
 export const logout = async (req, res: Response): Promise<void> => {
     res.clearCookie('token');
 
-    res.render(`admin/pages/auth/login`, {
-        pageTitle: "Log In"
-    })
+    res.redirect(`/${systemConfig.prefixAdmin}`);
 }

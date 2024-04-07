@@ -11,6 +11,7 @@ import { accountRoutes } from "./account.route";
 import { authRoutes } from "./auth.route";
 
 import * as authController from "../../controllers/admin/auth.controller";
+import * as authMiddleware from "../../middlewares/admin/auth.middleware";
 
 const adminRoutes = (app: Express): void => {
 
@@ -20,19 +21,19 @@ const adminRoutes = (app: Express): void => {
 
     app.use(`${PATH_ADMIN}/auth`, authRoutes);
 
-    app.use(`${PATH_ADMIN}/dashboard`, dashboardRoutes);
+    app.use(`${PATH_ADMIN}/dashboard`, authMiddleware.requireAuth, dashboardRoutes);
 
-    app.use(`${PATH_ADMIN}/genres`, genreRoutes);
+    app.use(`${PATH_ADMIN}/genres`, authMiddleware.requireAuth, genreRoutes);
 
-    app.use(`${PATH_ADMIN}/songs`, songRoutes);
+    app.use(`${PATH_ADMIN}/songs`, authMiddleware.requireAuth, songRoutes);
 
-    app.use(`${PATH_ADMIN}/upload`, uploadRoutes);
+    app.use(`${PATH_ADMIN}/upload`, authMiddleware.requireAuth, uploadRoutes);
 
-    app.use(`${PATH_ADMIN}/singers`, singerRoutes);
+    app.use(`${PATH_ADMIN}/singers`, authMiddleware.requireAuth, singerRoutes);
 
-    app.use(`${PATH_ADMIN}/roles`, roleRoutes);
+    app.use(`${PATH_ADMIN}/roles`, authMiddleware.requireAuth, roleRoutes);
 
-    app.use(`${PATH_ADMIN}/accounts`, accountRoutes);
+    app.use(`${PATH_ADMIN}/accounts`, authMiddleware.requireAuth, accountRoutes);
 
 }
 
