@@ -1,30 +1,31 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1(class="mb-4")=pageTitle 
+    if(role.permissions.includes('singers_view'))
+        h1(class="mb-4")=pageTitle 
 
-    hr
+        hr
 
-    .mb-4 
-        strong Full Name: 
-        span #{singer.fullName} 
-
-    .mb-4
-        strong Status: 
-        span #{singer.status}
-
-    if(singer.totalSongs)
         .mb-4 
-            strong Total number of songs: 
-            span #{singer.totalSongs}
+            strong Full Name: 
+            span #{singer.fullName} 
 
-    if(singer.avatar)
-        .mb-4 
-            strong Avatar 
-            .singer-avatar
-                img(
-                    src=singer.avatar
-                    alt=singer.fullName
-                    width=250
-                    height=auto
-                )
+        .mb-4
+            strong Status: 
+            span #{singer.status}
+
+        if(singer.totalSongs)
+            .mb-4 
+                strong Total number of songs: 
+                span #{singer.totalSongs}
+
+        if(singer.avatar)
+            .mb-4 
+                strong Avatar 
+                .singer-avatar
+                    img(
+                        src=singer.avatar
+                        alt=singer.fullName
+                        width=250
+                        height=auto
+                    )

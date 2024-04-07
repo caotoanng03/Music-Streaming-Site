@@ -34,8 +34,16 @@ block main
             +permission-grid("Song Management", "songs")
             +permission-grid("Singer Management", "singers")
             +permission-grid("Genre Management", "genres")
+            +permission-grid("Role Group Management", "roleGroups")
+            +permission-grid("Admin Account Management", "accounts")
+            +permission-grid("User Account Management", "users")
             tr(data-name=`roles_permissions`)
-                td Access Control Panel
+                td Access Controls Panel
+                each item in roles
+                    td(class="text-center")
+                        input(type="checkbox")
+            tr(data-name=`generalSettings`)
+                td General Settings
                 each item in roles
                     td(class="text-center")
                         input(type="checkbox")

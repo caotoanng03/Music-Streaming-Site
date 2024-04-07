@@ -1,38 +1,39 @@
 extends ../../layouts/default.pug 
 
-block main  
-    h1(class="mb-4")=pageTitle
+block main
+    if(role.permissions.includes('accounts_view'))
+        h1(class="mb-4")=pageTitle
 
-    hr 
+        hr 
 
-    if(account.avatar)
+        if(account.avatar)
+            div(class="mb-4")
+                img(
+                    src=account.avatar 
+                    alt=account.fullName 
+                    width=300
+                    height=auto
+                )
+
         div(class="mb-4")
-            img(
-                src=account.avatar 
-                alt=account.fullName 
-                width=300
-                height=auto
-            )
+            strong Full Name' Admin: 
+            span #{account.fullName} 
 
-    div(class="mb-4")
-        strong Full Name' Admin: 
-        span #{account.fullName} 
+        if(account.role.title)
+            div(class="mb-4")
+                strong Role: 
+                span #{account.role.title} 
 
-    if(account.role.title)
+        div(class="mb-4") 
+            strong Status: 
+            span #{account.status} 
+
         div(class="mb-4")
-            strong Role: 
-            span #{account.role.title} 
+            strong Email: 
+            span #{account.email}
 
-    div(class="mb-4") 
-        strong Status: 
-        span #{account.status} 
-
-    div(class="mb-4")
-        strong Email: 
-        span #{account.email}
-
-    div(class="mb-4")
-        strong Phone Number: 
-        span #{account.phone} 
+        div(class="mb-4")
+            strong Phone Number: 
+            span #{account.phone} 
 
 

@@ -1,73 +1,77 @@
 extends ../../layouts/default.pug
 
 block main
-    h1(class="mb-4") #{pageTitle}
+    if(role.permissions.includes('genres_view'))
+        h1(class="mb-4") #{pageTitle}
+
+        .card.mb-3
+            .card-header Genre List
+            .card-body
+                .row
+                    .col-8
+
+                    .col-4.text-right
+                        if(role.permissions.includes('genres_create'))
+                            a(
+                                href=`/${prefixAdmin}/genres/create`
+                                class="btn btn-outline-success"
+                            ) + New
 
 
-    .card.mb-3
-        .card-header Genre List
-        .card-body
-            .row
-                .col-8
+                table(
+                    class="table table-hover table-sm"
+                )
+                    thead
+                        tr
+                            th No.
+                            th Image
+                            th Title
+                            th Status
+                            th Action
 
-                .col-4.text-right
-                    a(
-                        href=`/${prefixAdmin}/genres/create`
-                        class="btn btn-outline-success"
-                    ) + New
-
-
-            table(
-                class="table table-hover table-sm"
-            )
-                thead
-                    tr
-                        th No.
-                        th Image
-                        th Title
-                        th Status
-                        th Action
-
-                tbody
-                    each item, index in genres
-                        tr 
-                            td #{index+1}
-                            td
-                                img(
-                                    src=item.avatar
-                                    alt=item.title
-                                    width="100px"
-                                    height="auto"
-                                )
-                            td #{item.title}
-                            td
-                                if (item.status === "active")
-                                    a(
-                                        href="javascript:;"
-                                        class="badge badge-success"
-                                    ) Active
-                                else
-                                    a(
-                                        href="javascript:;"
-                                        class="badge badge-danger"
-                                    ) Inactive
-                            td
-                                a(
-                                    class="btn btn-secondary btn-sm"
-                                    href=`/${prefixAdmin}/genres/detail/${item.id}`
-                                ) Detail
-                                a(
-                                    class="btn btn-warning btn-sm ml-1"
-                                    href=`/${prefixAdmin}/genres/edit/${item.id}`
-                                ) Edit
-                                button(
-                                    class="btn btn-danger btn-sm ml-1"
-                                    button-delete
-                                    data-id=item.id
-                                ) Delete
-            form(
-                id="form-delete-item"
-                action=""
-                method="POST"
-                data-path=`/${prefixAdmin}/genres/delete`
-            )
+                    tbody
+                        each item, index in genres
+                            tr 
+                                td #{index+1}
+                                td
+                                    img(
+                                        src=item.avatar
+                                        alt=item.title
+                                        width="100px"
+                                        height="auto"
+                                    )
+                                td #{item.title}
+                                td
+                                    if (item.status === "active")
+                                        a(
+                                            href="javascript:;"
+                                            class="badge badge-success"
+                                        ) Active
+                                    else
+                                        a(
+                                            href="javascript:;"
+                                            class="badge badge-danger"
+                                        ) Inactive
+                                td
+                                    if(role.permissions.includes('genres_view'))
+                                        a(
+                                            class="btn btn-secondary btn-sm"
+                                            href=`/${prefixAdmin}/genres/detail/${item.id}`
+                                        ) Detail
+                                    if(role.permissions.includes('genres_edit'))
+                                        a(
+                                            class="btn btn-warning btn-sm ml-1"
+                                            href=`/${prefixAdmin}/genres/edit/${item.id}`
+                                        ) Edit
+                                    if(role.permissions.includes('genres_delete'))
+                                        button(
+                                            class="btn btn-danger btn-sm ml-1"
+                                            button-delete
+                                            data-id=item.id
+                                        ) Delete
+                form(
+                    id="form-delete-item"
+                    action=""
+                    method="POST"
+                    data-path=`/${prefixAdmin}/genres/delete`
+                )

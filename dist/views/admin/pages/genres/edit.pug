@@ -1,77 +1,78 @@
 extend ../../layouts/default.pug
 
-block main 
-    h1(class="mb-4")= pageTitle 
+block main
+    if(role.permissions.includes('genres_edit'))
+        h1(class="mb-4")= pageTitle 
 
-    form(
-        action=`/${prefixAdmin}/genres/edit/${genre.id}?_method=PATCH`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="title") <b>Title</b>
-            input(
-                type="text"
-                id="title"
-                name="title"
-                class="form-control"
-                required
-                value=genre.title
-            )
-
-        div(
-            class="form-group"
-            upload-image
+        form(
+            action=`/${prefixAdmin}/genres/edit/${genre.id}?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
         )
-            label(for="avatar") <b>Image</b>
-            input(
-                type="file"
-                class="form-control-file"
-                id="avatar"
-                name="avatar"
-                accept="image/*"
-                upload-image-input
+            div(class="form-group")
+                label(for="title") <b>Title</b>
+                input(
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="form-control"
+                    required
+                    value=genre.title
+                )
+
+            div(
+                class="form-group"
+                upload-image
             )
+                label(for="avatar") <b>Image</b>
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="avatar"
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
 
-            img(
-                src=genre.avatar
-                class="image-preview"
-                upload-image-preview
-            )
+                img(
+                    src=genre.avatar
+                    class="image-preview"
+                    upload-image-preview
+                )
 
-        div(class="form-group")
-            label(for="desc") <b>Description</b>
-            textarea(
-                id="desc"
-                name="desc"
-                class="form-control"
-                textarea-mce
-            )=genre.description
+            div(class="form-group")
+                label(for="desc") <b>Description</b>
+                textarea(
+                    id="desc"
+                    name="desc"
+                    class="form-control"
+                    textarea-mce
+                )=genre.description
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                name="status"
-                id="active"
-                class="form-check-input"
-                value="active"
-                checked=(genre.status=='active' ? true : false)
-            )
-            label(for="active" class="form-check-label") Active
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    name="status"
+                    id="active"
+                    class="form-check-input"
+                    value="active"
+                    checked=(genre.status=='active' ? true : false)
+                )
+                label(for="active" class="form-check-label") Active
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                name="status"
-                id="inactive"
-                class="form-check-input"
-                value="inactive"
-                checked=(genre.status=='inactive' ? true : false)
-            )
-            label(for="inactive" class="form-check-label") Inactive
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    name="status"
+                    id="inactive"
+                    class="form-check-input"
+                    value="inactive"
+                    checked=(genre.status=='inactive' ? true : false)
+                )
+                label(for="inactive" class="form-check-label") Inactive
 
-        div(class="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Apply
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Apply

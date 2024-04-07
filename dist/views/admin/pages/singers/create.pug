@@ -1,65 +1,66 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1(class="mb-4")=pageTitle 
+    if(role.permissions.includes('singers_create'))
+        h1(class="mb-4")=pageTitle 
 
-    form(
-        action=`/${prefixAdmin}/singers/create`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="fullName") Full Name:
-            input(
-                type="text"
-                id="fullName"
-                name="fullName"
-                class="form-control"
-                required
-            )
-
-        div(
-            class="form-group"
-            upload-image
+        form(
+            action=`/${prefixAdmin}/singers/create`
+            method="POST"
+            enctype="multipart/form-data"
         )
-            label(for="avatar") Avatar:
-            input(
-                type="file"
-                class="form-control-file"
-                id="avatar"
-                name="avatar"
-                accept="image/*"
-                upload-image-input
-            )
-            img(
-                src=""
-                class="image-preview"
-                upload-image-preview
-            )
+            div(class="form-group")
+                label(for="fullName") Full Name:
+                input(
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    class="form-control"
+                    required
+                )
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                id="active"
-                name="status"
-                value="active"
-                class="form-check-input"
-                checked
+            div(
+                class="form-group"
+                upload-image
             )
-            label(for="active" class="form-check-label") Active
+                label(for="avatar") Avatar:
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="avatar"
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(
+                    src=""
+                    class="image-preview"
+                    upload-image-preview
+                )
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                id="inactive"
-                name="status"
-                value="inactive"
-                class="form-check-input"
-            )
-            label(for="inactive" class="form-check-label") Inactive
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    id="active"
+                    name="status"
+                    value="active"
+                    class="form-check-input"
+                    checked
+                )
+                label(for="active" class="form-check-label") Active
 
-        div(class="form-group")
-            Button(
-                type="submit"
-                class="btn btn-primary"        
-            ) Create
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    id="inactive"
+                    name="status"
+                    value="inactive"
+                    class="form-check-input"
+                )
+                label(for="inactive" class="form-check-label") Inactive
+
+            div(class="form-group")
+                Button(
+                    type="submit"
+                    class="btn btn-primary"        
+                ) Create

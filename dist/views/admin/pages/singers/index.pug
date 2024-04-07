@@ -1,77 +1,79 @@
 extends ../../layouts/default.pug
 
 block main
-    h1(class="mb-4")=pageTitle 
+    if(role.permissions.includes('singers_view'))
+        h1(class="mb-4")=pageTitle 
 
-    .card.mb-3 
-        .card-header Here is the list of singers 
-        .card-body
-            .row 
-                .col-8 
+        .card.mb-3 
+            .card-header Here is the list of singers 
+            .card-body
+                .row 
+                    .col-8 
 
-                .col-4.text-right
-                    a(
-                        href=`/${prefixAdmin}/singers/create`
-                        class="btn btn-outline-success"
-                    ) + New
+                    .col-4.text-right
+                        if(role.permissions.includes('singers_create'))
+                            a(
+                                href=`/${prefixAdmin}/singers/create`
+                                class="btn btn-outline-success"
+                            ) + New
 
-            table(
-                class="table table-hover table-sm"
-            )
-                thead
-                    tr
-                        th #
-                        th Avatar
-                        th Full Name 
-                        th Status 
-                        th Action 
+                table(
+                    class="table table-hover table-sm"
+                )
+                    thead
+                        tr
+                            th #
+                            th Avatar
+                            th Full Name 
+                            th Status 
+                            th Action 
 
-                tbody 
-                    each item, index in singers
-                        tr 
-                            td #{index + 1}
-                            td 
-                                img(
-                                    src=item.avatar
-                                    alt=item.fullName
-                                    width=100
-                                    height=100
-                                )
-                            td #{item.fullName}
-                            td 
-                                if(item.status == "active")
-                                    a(
-                                        href="javascript:;"
-                                        class="badge badge-success"
-                                    ) Active
-                                else 
-                                    a(
-                                        href="javascript:;"
-                                        class="badge badge-danger"
-                                    ) Inactive
+                    tbody 
+                        each item, index in singers
+                            tr 
+                                td #{index + 1}
+                                td 
+                                    img(
+                                        src=item.avatar
+                                        alt=item.fullName
+                                        width=100
+                                        height=100
+                                    )
+                                td #{item.fullName}
+                                td 
+                                    if(item.status == "active")
+                                        a(
+                                            href="javascript:;"
+                                            class="badge badge-success"
+                                        ) Active
+                                    else 
+                                        a(
+                                            href="javascript:;"
+                                            class="badge badge-danger"
+                                        ) Inactive
 
-                            td
-                                div(class="d-grid gap-2 d-md-flex justify-content-md-start")
-                                    div 
+                                td
+                                    if(role.permissions.includes('singers_view'))
                                         a(
                                             class="btn btn-dark btn-sm"
                                             href=`/${prefixAdmin}/singers/detail/${item.id}`
                                         ) Detail
-                                    div 
+                                    if(role.permissions.includes('singers_edit'))
                                         a(
                                             class="btn btn-dark btn-sm ml-1"
                                             href=`/${prefixAdmin}/singers/edit/${item.id}`
                                         ) Edit 
-                                    Button(
-                                        class="btn btn-danger btn-sm ml-1"
-                                        data-id=item.id
-                                        button-delete
-                                    ) Delete
+                                    if(role.permissions.includes('singers_delete'))
+                                        Button(
+                                            class="btn btn-danger btn-sm ml-1"
+                                            data-id=item.id
+                                            button-delete
+                                        ) Delete
 
 
-            form(
-                id="form-delete-item"
-                action=""
-                data-path=`/${prefixAdmin}/singers/delete`
-                method="POST"
-            )
+                form(
+                    id="form-delete-item"
+                    action=""
+                    data-path=`/${prefixAdmin}/singers/delete`
+                    method="POST"
+                )

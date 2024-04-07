@@ -2,3 +2,9 @@ extends ../../layouts/default.pug
 
 block main
     h1 Dashboard
+
+    hr 
+
+    div #{admin.fullName}
+    div #{role.title}
+    textarea(name="permissions" cols="50" rows="10")=role.permissions
