@@ -22,7 +22,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         deleted: false
     });
     res.render("admin/pages/songs/index", {
-        pageTitle: "Song",
+        pageTitle: "Song Management",
         songs
     });
 });

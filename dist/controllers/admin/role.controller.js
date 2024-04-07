@@ -114,7 +114,7 @@ const permissions = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         deleted: false
     });
     res.render(`admin/pages/roles/permissions`, {
-        pageTitle: "Access Control Panel",
+        pageTitle: "Access Controls Panel",
         roles
     });
 });

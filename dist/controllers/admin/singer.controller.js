@@ -21,7 +21,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         deleted: false
     });
     res.render(`admin/pages/singers/index`, {
-        pageTitle: "Singers",
+        pageTitle: "Singer Management",
         singers
     });
 });

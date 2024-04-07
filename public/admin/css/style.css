@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 /* Header */
 .header {
     background: #202020;
@@ -105,3 +109,11 @@
 }
 
 /* End Image Preview */
+
+/* Admin Avatar */
+.admin-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* End Admin Avatar */

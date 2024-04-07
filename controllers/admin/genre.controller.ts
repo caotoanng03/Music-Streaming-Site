@@ -12,7 +12,7 @@ export const index = async (req: Request, res: Response): Promise<void> => {
     });
 
     res.render("admin/pages/genres/index", {
-        pageTitle: "Genre",
+        pageTitle: "Genre Management",
         genres
     });
 };

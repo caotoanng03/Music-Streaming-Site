@@ -11,7 +11,7 @@ export const index = async (req: Request, res: Response): Promise<void> => {
     });
 
     res.render(`admin/pages/singers/index`, {
-        pageTitle: "Singers",
+        pageTitle: "Singer Management",
         singers
     })
 };

@@ -141,7 +141,7 @@ export const permissions = async (req: Request, res: Response): Promise<void> =>
     });
 
     res.render(`admin/pages/roles/permissions`, {
-        pageTitle: "Access Control Panel",
+        pageTitle: "Access Controls Panel",
         roles
     })
 }
