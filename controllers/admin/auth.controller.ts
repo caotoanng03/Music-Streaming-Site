@@ -5,14 +5,15 @@ import { systemConfig } from "../../config/config";
 
 // [GET] /admin/auth/login
 export const login = async (req: Request, res: Response): Promise<void> => {
-    const token: string = `${req.cookies.token}`;
+    // dont use `${}` here because if it dont have, return 'undefine', then if(token) -> true
+    const token = req.cookies.token;
 
     if (token) {
         const account = await Account.findOne({
             token: token,
             deleted: false,
             status: 'active'
-        });
+        }).select('-password -token');
 
         if (account) {
             res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
@@ -54,4 +55,13 @@ export const loginPost = async (req, res: Response): Promise<void> => {
 
     res.cookie('token', account.token);
     res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
+}
+
+// [GET] /admin/auth/logout
+export const logout = async (req, res: Response): Promise<void> => {
+    res.clearCookie('token');
+
+    res.render(`admin/pages/auth/login`, {
+        pageTitle: "Log In"
+    })
 }

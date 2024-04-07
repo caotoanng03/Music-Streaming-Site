@@ -12,18 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginPost = exports.login = void 0;
+exports.logout = exports.loginPost = exports.login = void 0;
 const account_model_1 = __importDefault(require("../../models/account.model"));
 const md5_1 = __importDefault(require("md5"));
 const config_1 = require("../../config/config");
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = `${req.cookies.token}`;
+    const token = req.cookies.token;
     if (token) {
         const account = yield account_model_1.default.findOne({
             token: token,
             deleted: false,
             status: 'active'
-        });
+        }).select('-password -token');
         if (account) {
             res.redirect(`/${config_1.systemConfig.prefixAdmin}/dashboard`);
         }
@@ -60,3 +60,10 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/dashboard`);
 });
 exports.loginPost = loginPost;
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.clearCookie('token');
+    res.render(`admin/pages/auth/login`, {
+        pageTitle: "Log In"
+    });
+});
+exports.logout = logout;
