@@ -34,6 +34,7 @@ const account_route_1 = require("./account.route");
 const auth_route_1 = require("./auth.route");
 const authController = __importStar(require("../../controllers/admin/auth.controller"));
 const authMiddleware = __importStar(require("../../middlewares/admin/auth.middleware"));
+const my_admin_route_1 = require("./my-admin.route");
 const adminRoutes = (app) => {
     const PATH_ADMIN = `/${config_1.systemConfig.prefixAdmin}`;
     app.get(PATH_ADMIN, authController.login);
@@ -45,5 +46,6 @@ const adminRoutes = (app) => {
     app.use(`${PATH_ADMIN}/singers`, authMiddleware.requireAuth, singer_route_1.singerRoutes);
     app.use(`${PATH_ADMIN}/roles`, authMiddleware.requireAuth, role_route_1.roleRoutes);
     app.use(`${PATH_ADMIN}/accounts`, authMiddleware.requireAuth, account_route_1.accountRoutes);
+    app.use(`${PATH_ADMIN}/my-admin`, authMiddleware.requireAuth, my_admin_route_1.myAdminRoutes);
 };
 exports.default = adminRoutes;

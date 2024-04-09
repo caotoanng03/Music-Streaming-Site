@@ -1,64 +1,65 @@
 extends ../../layouts/default.pug 
 include ../../mixins/permission-grid.pug
 
-block main 
-    h1(class="mb-4")=pageTitle 
+block main
+    if(role.permissions.includes('roles_permissions'))
+        h1(class="mb-4")=pageTitle 
 
-    div(class="text-right")
-        button(
-            type="submit"
-            class="btn btn-primary mb-3"
-            button-submit
-        ) Apply Changes
+        div(class="text-right")
+            button(
+                type="submit"
+                class="btn btn-primary mb-3"
+                button-submit
+            ) Apply Changes
 
-    div(data-records=roles)
+        div(data-records=roles)
 
-    table(
-        class="table table-hover table-sm"
-        table-permissions
-    )
-        thead()
-            tr 
-                th Permission
-                each item in roles 
-                    th(class="text-center") #{item.title} 
-        tbody 
-            tr(data-name="id" class="d-none")
-                td 
-                each item in roles 
-                    td(class="text-center")
-                        input(
-                            type="text"
-                            value=item.id
-                        )
-            +permission-grid("Song Management", "songs")
-            +permission-grid("Singer Management", "singers")
-            +permission-grid("Genre Management", "genres")
-            +permission-grid("Role Group Management", "roleGroups")
-            +permission-grid("Admin Account Management", "accounts")
-            +permission-grid("User Account Management", "users")
-            tr(data-name=`roles_permissions`)
-                td Access Controls Panel
-                each item in roles
-                    td(class="text-center")
-                        input(type="checkbox")
-            tr(data-name=`generalSettings`)
-                td General Settings
-                each item in roles
-                    td(class="text-center")
-                        input(type="checkbox")
+        table(
+            class="table table-hover table-sm"
+            table-permissions
+        )
+            thead()
+                tr 
+                    th Permission
+                    each item in roles 
+                        th(class="text-center") #{item.title} 
+            tbody 
+                tr(data-name="id" class="d-none")
+                    td 
+                    each item in roles 
+                        td(class="text-center")
+                            input(
+                                type="text"
+                                value=item.id
+                            )
+                +permission-grid("Song Management", "songs")
+                +permission-grid("Singer Management", "singers")
+                +permission-grid("Genre Management", "genres")
+                +permission-grid("Role Group Management", "roleGroups")
+                +permission-grid("Admin Account Management", "accounts")
+                +permission-grid("User Account Management", "users")
+                tr(data-name=`roles_permissions`)
+                    td Access Controls Panel
+                    each item in roles
+                        td(class="text-center")
+                            input(type="checkbox")
+                tr(data-name=`generalSettings`)
+                    td General Settings
+                    each item in roles
+                        td(class="text-center")
+                            input(type="checkbox")
 
-    form(
-        id="form-change-permissions"
-        method="POST"
-        action=`/${prefixAdmin}/roles/permissions?_method=PATCH`
-        class="d-none"
-    )   
-        div(class="form-group")
-            input(
-                type="text"
-                class="form-control"
-                name="permissions"
-            )
+        form(
+            id="form-change-permissions"
+            method="POST"
+            action=`/${prefixAdmin}/roles/permissions?_method=PATCH`
+            class="d-none"
+        )   
+            div(class="form-group")
+                input(
+                    type="text"
+                    class="form-control"
+                    name="permissions"
+                )
 
-    script(src="/admin/js/role.js")
+        script(src="/admin/js/role.js")

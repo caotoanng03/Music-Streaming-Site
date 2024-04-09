@@ -4,7 +4,7 @@ import { systemConfig } from "../../config/config";
 
 // [GET] /admin/roles
 export const index = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_view')) {
+    if (!res.locals.role.permissions.includes('roleGroups_view')) {
         res.sendStatus(400);
         return;
     }
@@ -21,7 +21,7 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 // [GET] /admin/roles/create
 export const create = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_create')) {
+    if (!res.locals.role.permissions.includes('roleGroups_create')) {
         res.sendStatus(400);
         return;
     }
@@ -33,7 +33,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 // [POST] /admin/roles/create
 export const createPost = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_create')) {
+    if (!res.locals.role.permissions.includes('roleGroups_create')) {
         res.sendStatus(400);
         return;
     }
@@ -61,7 +61,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/roles/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_edit')) {
+    if (!res.locals.role.permissions.includes('roleGroups_edit')) {
         res.sendStatus(400);
         return;
     }
@@ -88,7 +88,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/roles/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_edit')) {
+    if (!res.locals.role.permissions.includes('roleGroups_edit')) {
         res.sendStatus(400);
         return;
     }
@@ -118,7 +118,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 // [DELETE] /admin/roles/delete/:id
 export const deleteRole = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_delete')) {
+    if (!res.locals.role.permissions.includes('roleGroups_delete')) {
         res.sendStatus(400);
         return;
     }
@@ -143,7 +143,7 @@ export const deleteRole = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/roles/detail/:id
 export const detail = async (req: Request, res: Response): Promise<void> => {
-    if (!res.locals.role.permissions.includes('roles_view')) {
+    if (!res.locals.role.permissions.includes('roleGroups_view')) {
         res.sendStatus(400);
         return;
     }

@@ -16,7 +16,7 @@ exports.permissionsPatch = exports.permissions = exports.detail = exports.delete
 const role_model_1 = __importDefault(require("../../models/role.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_view')) {
+    if (!res.locals.role.permissions.includes('roleGroups_view')) {
         res.sendStatus(400);
         return;
     }
@@ -30,7 +30,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_create')) {
+    if (!res.locals.role.permissions.includes('roleGroups_create')) {
         res.sendStatus(400);
         return;
     }
@@ -40,7 +40,7 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_create')) {
+    if (!res.locals.role.permissions.includes('roleGroups_create')) {
         res.sendStatus(400);
         return;
     }
@@ -58,7 +58,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_edit')) {
+    if (!res.locals.role.permissions.includes('roleGroups_edit')) {
         res.sendStatus(400);
         return;
     }
@@ -79,7 +79,7 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_edit')) {
+    if (!res.locals.role.permissions.includes('roleGroups_edit')) {
         res.sendStatus(400);
         return;
     }
@@ -98,7 +98,7 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editPatch = editPatch;
 const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_delete')) {
+    if (!res.locals.role.permissions.includes('roleGroups_delete')) {
         res.sendStatus(400);
         return;
     }
@@ -117,7 +117,7 @@ const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteRole = deleteRole;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!res.locals.role.permissions.includes('roles_view')) {
+    if (!res.locals.role.permissions.includes('roleGroups_view')) {
         res.sendStatus(400);
         return;
     }
