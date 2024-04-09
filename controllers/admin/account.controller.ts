@@ -6,6 +6,10 @@ import { systemConfig } from "../../config/config";
 
 // [GET] /admin/accounts
 export const index = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_view')) {
+        res.sendStatus(400);
+        return;
+    }
 
     const accounts = await Account.find({
         deleted: false
@@ -28,6 +32,11 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 // [GET] /admin/accounts/create
 export const create = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_create')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roles = await Role.find({
         deleted: false
     }).select('title');
@@ -38,8 +47,13 @@ export const create = async (req: Request, res: Response): Promise<void> => {
     })
 }
 
-// [GET] /admin/accounts/create
+// [POST] /admin/accounts/create
 export const createPost = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_create')) {
+        res.sendStatus(400);
+        return;
+    }
+
     interface AccountInter {
         fullName: string,
         email: string,
@@ -74,6 +88,11 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/accounts/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const accountId: string = `${req.params.id}`;
 
     try {
@@ -98,6 +117,11 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/accounts/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const accountId: string = `${req.params.id}`;
 
     interface AccountInter {
@@ -136,6 +160,11 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 // [DELETE] /admin/accounts/delete/:id
 export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_delete')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const accountId: string = `${req.params.id}`;
 
     await Account.updateOne({
@@ -150,6 +179,11 @@ export const deleteAccount = async (req: Request, res: Response): Promise<void> 
 
 // [GET] /admin/accounts/detail/:id
 export const detail = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('accounts_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const accountId: string = `${req.params.id}`;
 
     try {

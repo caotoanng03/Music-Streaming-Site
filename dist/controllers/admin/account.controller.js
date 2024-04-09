@@ -18,6 +18,10 @@ const role_model_1 = __importDefault(require("../../models/role.model"));
 const md5_1 = __importDefault(require("md5"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const accounts = yield account_model_1.default.find({
         deleted: false
     }).select('-password -token');
@@ -36,6 +40,10 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_create')) {
+        res.sendStatus(400);
+        return;
+    }
     const roles = yield role_model_1.default.find({
         deleted: false
     }).select('title');
@@ -46,6 +54,10 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_create')) {
+        res.sendStatus(400);
+        return;
+    }
     let avatar = "";
     if (req.body.avatar) {
         avatar = req.body.avatar;
@@ -65,6 +77,10 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const accountId = `${req.params.id}`;
     try {
         const account = yield account_model_1.default.findOne({
@@ -84,6 +100,10 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const accountId = `${req.params.id}`;
     const accountData = {
         fullName: req.body.fullName,
@@ -106,6 +126,10 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editPatch = editPatch;
 const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_delete')) {
+        res.sendStatus(400);
+        return;
+    }
     const accountId = `${req.params.id}`;
     yield account_model_1.default.updateOne({
         _id: accountId,
@@ -117,6 +141,10 @@ const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.deleteAccount = deleteAccount;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('accounts_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const accountId = `${req.params.id}`;
     try {
         const account = yield account_model_1.default.findOne({

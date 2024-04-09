@@ -7,6 +7,11 @@ import Song from "../../models/song.model";
 
 // [GET] /admin/genres/
 export const index = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('genres_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const genres = await Genre.find({
         deleted: false
     });
@@ -19,6 +24,11 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 //[GET] /admin/genres/create
 export const create = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('genres_create')) {
+        res.sendStatus(400);
+        return;
+    }
+
     res.render('admin/pages/genres/create', {
         pageTitle: `Create New Genre`
     })
@@ -26,6 +36,10 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 //[POST] /admin/genres/create
 export const createPost = async (req: Request, res: Response) => {
+    if (!res.locals.role.permissions.includes('genres_create')) {
+        res.sendStatus(400);
+        return;
+    }
 
     interface GenreInter {
         title: string,
@@ -56,6 +70,11 @@ export const createPost = async (req: Request, res: Response) => {
 
 //[GET] /admin/genres/edit/:id
 export const edit = async (req: Request, res: Response) => {
+    if (!res.locals.role.permissions.includes('genres_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const genreId: string = `${req.params.id}`;
 
     try {
@@ -77,6 +96,11 @@ export const edit = async (req: Request, res: Response) => {
 
 //[PATCH] /admin/genres/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('genres_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const gerneID: string = `${req.params.id}`
 
     interface GenreInter {
@@ -112,6 +136,11 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 //[DELETE] /admin/genres/delete/:id
 export const deleteGenre = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('genres_delete')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const genreID = `${req.params.id}`;
 
     try {
@@ -130,6 +159,11 @@ export const deleteGenre = async (req: Request, res: Response): Promise<void> =>
 
 //[GET] /admin/genres/detail/:id
 export const detail = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('genres_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const genreID: string = `${req.params.id}`;
 
     try {

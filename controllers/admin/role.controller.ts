@@ -4,6 +4,11 @@ import { systemConfig } from "../../config/config";
 
 // [GET] /admin/roles
 export const index = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roles = await Role.find({
         deleted: false
     }) || [];
@@ -16,6 +21,10 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 // [GET] /admin/roles/create
 export const create = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_create')) {
+        res.sendStatus(400);
+        return;
+    }
 
     res.render(`admin/pages/roles/create`, {
         pageTitle: "New Role Group"
@@ -24,6 +33,11 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 // [POST] /admin/roles/create
 export const createPost = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_create')) {
+        res.sendStatus(400);
+        return;
+    }
+
     interface RoleInter {
         title: string
         description: string
@@ -47,6 +61,11 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/roles/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roleID: string = `${req.params.id}`;
 
     try {
@@ -69,6 +88,11 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/roles/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roleID: string = `${req.params.id}`;
 
     interface RoleInter {
@@ -94,6 +118,11 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 // [DELETE] /admin/roles/delete/:id
 export const deleteRole = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_delete')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roleID: string = `${req.params.id}`;
 
     try {
@@ -114,6 +143,11 @@ export const deleteRole = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/roles/detail/:id
 export const detail = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roleID: string = `${req.params.id}`;
 
     try {
@@ -134,8 +168,13 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-// [GET] /admin/permissions
+// [GET] /admin/roles/permissions
 export const permissions = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_permissions')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const roles = await Role.find({
         deleted: false
     });
@@ -146,8 +185,13 @@ export const permissions = async (req: Request, res: Response): Promise<void> =>
     })
 }
 
-// [PATCH] /admin/permissions
+// [PATCH] /admin/roles/permissions
 export const permissionsPatch = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('roles_permissions')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const permissions = JSON.parse(req.body.permissions);
 
     for (const item of permissions) {

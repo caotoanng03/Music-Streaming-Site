@@ -6,6 +6,11 @@ import Song from "../../models/song.model";
 
 // [GET] /admin/singers
 export const index = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const singers = await Singer.find({
         deleted: false
     });
@@ -18,6 +23,10 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 // [GET] /admin/singers/create
 export const create = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_create')) {
+        res.sendStatus(400);
+        return;
+    }
 
     res.render(`admin/pages/singers/create`, {
         pageTitle: "New Singer"
@@ -26,6 +35,11 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 // [POST] /admin/singers/create
 export const createPost = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_create')) {
+        res.sendStatus(400);
+        return;
+    }
+
     interface SingerInter {
         fullName: string,
         avatar: string,
@@ -52,6 +66,11 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/singers/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const singerID: string = `${req.params.id}`;
     try {
         const singer = await Singer.findOne({
@@ -71,6 +90,11 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/singers/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const singerID: string = `${req.params.id}`;
 
     interface singerInter {
@@ -104,6 +128,11 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 // [DELETE] /admin/singers/delete/:id
 export const deleteSinger = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_delete')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const singerId: string = `${req.params.id}`;
 
     try {
@@ -123,6 +152,11 @@ export const deleteSinger = async (req: Request, res: Response): Promise<void> =
 
 // [GET] /admin/singers/detail/:id
 export const detail = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('singers_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const singerID: string = `${req.params.id}`;
 
     try {

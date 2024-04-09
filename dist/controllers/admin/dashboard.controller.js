@@ -11,6 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (res.locals.role.permissions.length <= 0) {
+        res.sendStatus(400);
+        return;
+    }
     res.render("admin/pages/dashboard/index", {
         pageTitle: "Dashboard"
     });

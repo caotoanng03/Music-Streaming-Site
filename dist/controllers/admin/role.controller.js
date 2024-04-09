@@ -16,6 +16,10 @@ exports.permissionsPatch = exports.permissions = exports.detail = exports.delete
 const role_model_1 = __importDefault(require("../../models/role.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const roles = (yield role_model_1.default.find({
         deleted: false
     })) || [];
@@ -26,12 +30,20 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_create')) {
+        res.sendStatus(400);
+        return;
+    }
     res.render(`admin/pages/roles/create`, {
         pageTitle: "New Role Group"
     });
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_create')) {
+        res.sendStatus(400);
+        return;
+    }
     let desc = "";
     if (req.body.desc) {
         desc = req.body.desc;
@@ -46,6 +58,10 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const roleID = `${req.params.id}`;
     try {
         const role = yield role_model_1.default.findOne({
@@ -63,6 +79,10 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const roleID = `${req.params.id}`;
     const roleData = {
         title: req.body.title
@@ -78,6 +98,10 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editPatch = editPatch;
 const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_delete')) {
+        res.sendStatus(400);
+        return;
+    }
     const roleID = `${req.params.id}`;
     try {
         yield role_model_1.default.updateOne({
@@ -93,6 +117,10 @@ const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteRole = deleteRole;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const roleID = `${req.params.id}`;
     try {
         const role = yield role_model_1.default.findOne({
@@ -110,6 +138,10 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.detail = detail;
 const permissions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_permissions')) {
+        res.sendStatus(400);
+        return;
+    }
     const roles = yield role_model_1.default.find({
         deleted: false
     });
@@ -120,6 +152,10 @@ const permissions = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.permissions = permissions;
 const permissionsPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('roles_permissions')) {
+        res.sendStatus(400);
+        return;
+    }
     const permissions = JSON.parse(req.body.permissions);
     for (const item of permissions) {
         yield role_model_1.default.updateOne({

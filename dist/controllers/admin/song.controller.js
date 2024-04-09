@@ -18,6 +18,10 @@ const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const songs = yield song_model_1.default.find({
         deleted: false
     });
@@ -28,6 +32,10 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_create')) {
+        res.sendStatus(400);
+        return;
+    }
     const genres = yield genre_model_1.default.find({
         deleted: false,
         status: "active"
@@ -44,6 +52,10 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_create')) {
+        res.sendStatus(400);
+        return;
+    }
     ;
     let avatar = "";
     let audio = "";
@@ -71,6 +83,10 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const songId = `${req.params.id}`;
     try {
         const song = yield song_model_1.default.findOne({
@@ -99,6 +115,10 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const songId = `${req.params.id}`;
     ;
     const songData = {
@@ -130,6 +150,10 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editPatch = editPatch;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const songId = `${req.params.id}`;
     try {
         const song = yield song_model_1.default.findOne({
@@ -157,6 +181,10 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.detail = detail;
 const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('songs_delete')) {
+        res.sendStatus(400);
+        return;
+    }
     const songId = `${req.params.id}`;
     try {
         yield song_model_1.default.updateOne({

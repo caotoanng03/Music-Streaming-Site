@@ -7,6 +7,11 @@ import { title } from "process";
 
 // [GET] /admin/songs
 export const index = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const songs = await Song.find({
         deleted: false
     });
@@ -19,6 +24,11 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
 // [GET] /admin/songs/create
 export const create = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_create')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const genres = await Genre.find({
         deleted: false,
         status: "active"
@@ -38,6 +48,10 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 
 // [POST] /admin/songs/create
 export const createPost = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_create')) {
+        res.sendStatus(400);
+        return;
+    }
 
     interface SongInter {
         title: string,
@@ -80,6 +94,11 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 // [GET] /admin/songs/edit/:id
 export const edit = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_edit')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const songId: string = `${req.params.id}`;
     try {
         const song = await Song.findOne({
@@ -113,6 +132,10 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /admin/songs/edit/:id
 export const editPatch = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_edit')) {
+        res.sendStatus(400);
+        return;
+    }
 
     const songId: string = `${req.params.id}`;
 
@@ -160,6 +183,11 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 
 // [GET] /admin/songs/detail/:id
 export const detail = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_view')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const songId: string = `${req.params.id}`;
 
     try {
@@ -193,6 +221,11 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
 
 // [DELETE] /admin/songs/delete/:id
 export const deleteSong = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.role.permissions.includes('songs_delete')) {
+        res.sendStatus(400);
+        return;
+    }
+
     const songId: string = `${req.params.id}`;
 
     try {

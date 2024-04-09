@@ -17,6 +17,10 @@ const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const config_1 = require("../../config/config");
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const singers = yield singer_model_1.default.find({
         deleted: false
     });
@@ -27,12 +31,20 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_create')) {
+        res.sendStatus(400);
+        return;
+    }
     res.render(`admin/pages/singers/create`, {
         pageTitle: "New Singer"
     });
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_create')) {
+        res.sendStatus(400);
+        return;
+    }
     ;
     let avatar = "";
     if (req.body.avatar) {
@@ -49,6 +61,10 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const singerID = `${req.params.id}`;
     try {
         const singer = yield singer_model_1.default.findOne({
@@ -66,6 +82,10 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const singerID = `${req.params.id}`;
     const singerData = {
         fullName: req.body.fullName,
@@ -87,6 +107,10 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editPatch = editPatch;
 const deleteSinger = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_delete')) {
+        res.sendStatus(400);
+        return;
+    }
     const singerId = `${req.params.id}`;
     try {
         yield singer_model_1.default.updateOne({
@@ -103,6 +127,10 @@ const deleteSinger = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.deleteSinger = deleteSinger;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('singers_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const singerID = `${req.params.id}`;
     try {
         const singer = yield singer_model_1.default.findOne({

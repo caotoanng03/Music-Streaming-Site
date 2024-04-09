@@ -17,6 +17,10 @@ const genre_model_1 = __importDefault(require("../../models/genre.model"));
 const config_1 = require("../../config/config");
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const genres = yield genre_model_1.default.find({
         deleted: false
     });
@@ -27,12 +31,20 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_create')) {
+        res.sendStatus(400);
+        return;
+    }
     res.render('admin/pages/genres/create', {
         pageTitle: `Create New Genre`
     });
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_create')) {
+        res.sendStatus(400);
+        return;
+    }
     let avatar = "";
     if (req.body.avatar) {
         avatar = req.body["avatar"];
@@ -49,6 +61,10 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const genreId = `${req.params.id}`;
     try {
         const genre = yield genre_model_1.default.findOne({
@@ -66,6 +82,10 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_edit')) {
+        res.sendStatus(400);
+        return;
+    }
     const gerneID = `${req.params.id}`;
     const genreObject = {
         title: req.body.title,
@@ -88,6 +108,10 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editPatch = editPatch;
 const deleteGenre = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_delete')) {
+        res.sendStatus(400);
+        return;
+    }
     const genreID = `${req.params.id}`;
     try {
         yield genre_model_1.default.updateOne({
@@ -103,6 +127,10 @@ const deleteGenre = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.deleteGenre = deleteGenre;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.role.permissions.includes('genres_view')) {
+        res.sendStatus(400);
+        return;
+    }
     const genreID = `${req.params.id}`;
     try {
         let genre = yield genre_model_1.default.findOne({
