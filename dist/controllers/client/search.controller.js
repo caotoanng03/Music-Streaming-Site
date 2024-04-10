@@ -28,7 +28,8 @@ const result = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             $or: [
                 { title: keywordRegex },
                 { slug: formattedSlugRegex }
-            ]
+            ],
+            status: "active"
         }).select("-lyrics -description");
         for (const item of songs) {
             const singerInfo = yield singer_model_1.default.findOne({

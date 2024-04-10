@@ -7,7 +7,7 @@ block main
             .col-12
                 +box-head(pageTitle)
 
-        .row
+        .row.genre-list
             each genre in genres
                 .col-3.mb-3
                     div(class="card")
@@ -15,9 +15,8 @@ block main
                             img(
                                 src=genre.avatar
                                 width=auto
-                                height=250
+                                height=200
                             )
                         div(class="card-body")
                             h5(class="card-title") #{genre.title}
-                            p(class="card-text") !{genre.description}
-                            //- a(href=`/songs/${genre.slug}` class="btn btn-primary") View
+                            span(class="card-text") !{genre.description}

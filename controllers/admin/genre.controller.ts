@@ -127,7 +127,7 @@ export const editPatch = async (req, res: Response): Promise<void> => {
             _id: gerneID
         }, genreObject)
 
-        req.flash('success', 'New genre was updated successfully.');
+        req.flash('success', 'The genre was updated successfully.');
         res.redirect(`/${systemConfig.prefixAdmin}/genres`);
 
     } catch (error) {

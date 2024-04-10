@@ -10,7 +10,7 @@ export const result = async (req: Request, res: Response): Promise<void> => {
 
     let searchedSongs = [];
 
-    if(keyword) {
+    if (keyword) {
         const keywordRegex = new RegExp(keyword, "i");
 
         // convert sang slug không dấu và thêm dấu "-"
@@ -21,7 +21,8 @@ export const result = async (req: Request, res: Response): Promise<void> => {
             $or: [
                 { title: keywordRegex },
                 { slug: formattedSlugRegex }
-            ]
+            ],
+            status: "active"
         }).select("-lyrics -description");
 
         for (const item of songs) {
@@ -42,12 +43,12 @@ export const result = async (req: Request, res: Response): Promise<void> => {
                     fullName: singerInfo.fullName
                 }
             });
-        };   
-        
+        };
+
         // searchedSongs = songs;
     }
 
-    switch(type) {
+    switch (type) {
         case "result":
             res.render("client/pages/search/result", {
                 pageTitle: `Kết quả: ${keyword}`,

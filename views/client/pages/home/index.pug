@@ -3,11 +3,12 @@ include ../../mixins/box-head.pug
 
 block main
     .container.my-3
-        .row
-            .col-12
-                +box-head(pageTitle)
+        //- .row
+        //-     .col-12
+        //-         +box-head(pageTitle)
 
-        h1 Top 5 Recent Songs
+        div(class="mb-3")
+            h2 Recent 
         .row
             each song in songs
                 .col-6.mb-3

@@ -34,7 +34,12 @@ body {
 }
 
 .header .inner-menu>ul>li {
+    font-weight: 700;
     margin-left: 20px;
+}
+
+.header .inner-menu>ul>li>a {
+    color: #333;
 }
 
 /* End Header */
@@ -66,10 +71,37 @@ body {
     margin-bottom: 0;
     font-size: 28px;
     font-weight: 600;
-    color: green;
+    color: #333;
 }
 
 /* End box-head */
+
+/* Genre */
+
+.genre-list .card .card-body p, h5 {
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    margin-bottom: 5px;
+}
+
+.genre-list .card {
+    border-radius: 20px;
+    /* border: none; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    color: #333;
+}
+
+.genre-list .card img {
+    border-radius: 20px 0 0 0;
+}
+
+
+/* End Genre */
 
 /* song-item */
 .song-item {

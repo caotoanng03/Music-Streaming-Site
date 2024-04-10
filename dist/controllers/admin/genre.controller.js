@@ -101,7 +101,7 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield genre_model_1.default.updateOne({
             _id: gerneID
         }, genreObject);
-        req.flash('success', 'New genre was updated successfully.');
+        req.flash('success', 'The genre was updated successfully.');
         res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
     }
     catch (error) {
