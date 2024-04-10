@@ -65,13 +65,13 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const roleID = `${req.params.id}`;
     try {
-        const role = yield role_model_1.default.findOne({
+        const roles = yield role_model_1.default.findOne({
             _id: roleID,
             deleted: false
         });
         res.render(`admin/pages/roles/edit`, {
-            pageTitle: `Edit Role Group ${role.title}`,
-            role
+            pageTitle: `Edit Role Group ${roles.title}`,
+            roles
         });
     }
     catch (error) {
@@ -126,13 +126,13 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const roleID = `${req.params.id}`;
     try {
-        const role = yield role_model_1.default.findOne({
+        const roleFromDB = yield role_model_1.default.findOne({
             _id: roleID,
             deleted: false
         });
         res.render(`admin/pages/roles/detail`, {
-            pageTitle: `Detail - ${role.title}`,
-            role
+            pageTitle: `Detail - ${roleFromDB.title}`,
+            roleFromDB
         });
     }
     catch (error) {

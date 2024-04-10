@@ -70,15 +70,17 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
     const roleID: string = `${req.params.id}`;
 
     try {
-        const role = await Role.findOne({
+        // role: can be the same variable name here to the one from auth.middleware
+        const roles = await Role.findOne({
             _id: roleID,
             deleted: false
         });
 
         res.render(`admin/pages/roles/edit`, {
-            pageTitle: `Edit Role Group ${role.title}`,
-            role
+            pageTitle: `Edit Role Group ${roles.title}`,
+            roles
         })
+
     } catch (error) {
         //  TODO: redirect to 404 page
         res.redirect(`/${systemConfig.prefixAdmin}/roles`)
@@ -154,15 +156,15 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
     const roleID: string = `${req.params.id}`;
 
     try {
-
-        const role = await Role.findOne({
+        // role: can be the same variable name here to the one from auth.middleware
+        const roleFromDB = await Role.findOne({
             _id: roleID,
             deleted: false
         })
 
         res.render(`admin/pages/roles/detail`, {
-            pageTitle: `Detail - ${role.title}`,
-            role
+            pageTitle: `Detail - ${roleFromDB.title}`,
+            roleFromDB
         })
 
     } catch (error) {
