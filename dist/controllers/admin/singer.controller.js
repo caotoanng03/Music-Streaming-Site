@@ -57,6 +57,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     };
     const singer = new singer_model_1.default(singerData);
     yield singer.save();
+    req.flash('success', 'New singer was created successfully.');
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
 });
 exports.createPost = createPost;
@@ -99,6 +100,7 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             _id: singerID,
             deleted: false
         }, singerData);
+        req.flash('success', 'The singer was updated successfully.');
         res.redirect(`/${config_1.systemConfig.prefixAdmin}/singers`);
     }
     catch (error) {
@@ -119,6 +121,7 @@ const deleteSinger = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }, {
             deleted: true
         });
+        req.flash('success', 'The singer was deleted successfully.');
         res.redirect(`back`);
     }
     catch (error) {

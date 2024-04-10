@@ -47,7 +47,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 };
 
 // [POST] /admin/songs/create
-export const createPost = async (req: Request, res: Response): Promise<void> => {
+export const createPost = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('songs_create')) {
         res.sendStatus(400);
         return;
@@ -89,6 +89,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const song = new Song(objectSong);
     await song.save();
 
+    req.flash('success', 'New song was created successfully.');
     res.redirect(`/${systemConfig.prefixAdmin}/songs`);
 };
 
@@ -131,7 +132,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [PATCH] /admin/songs/edit/:id
-export const editPatch = async (req: Request, res: Response): Promise<void> => {
+export const editPatch = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('songs_edit')) {
         res.sendStatus(400);
         return;
@@ -172,6 +173,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
             _id: songId,
         }, songData);
 
+        req.flash('success', 'The song was updated successfully.');
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
 
     } catch (error) {
@@ -220,7 +222,7 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [DELETE] /admin/songs/delete/:id
-export const deleteSong = async (req: Request, res: Response): Promise<void> => {
+export const deleteSong = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('songs_delete')) {
         res.sendStatus(400);
         return;
@@ -235,6 +237,7 @@ export const deleteSong = async (req: Request, res: Response): Promise<void> => 
             deleted: true
         })
 
+        req.flash('success', 'The song was deleted successfully.');
         res.redirect(`back`);
     } catch (error) {
         // TODO: redirect 404 page

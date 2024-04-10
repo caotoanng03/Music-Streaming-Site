@@ -34,7 +34,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 };
 
 // [POST] /admin/singers/create
-export const createPost = async (req: Request, res: Response): Promise<void> => {
+export const createPost = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('singers_create')) {
         res.sendStatus(400);
         return;
@@ -60,6 +60,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const singer = new Singer(singerData);
     await singer.save();
 
+    req.flash('success', 'New singer was created successfully.');
     res.redirect(`/${systemConfig.prefixAdmin}/singers`);
 
 }
@@ -89,7 +90,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [PATCH] /admin/singers/edit/:id
-export const editPatch = async (req: Request, res: Response): Promise<void> => {
+export const editPatch = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('singers_edit')) {
         res.sendStatus(400);
         return;
@@ -118,7 +119,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
             deleted: false
         }, singerData);
 
-
+        req.flash('success', 'The singer was updated successfully.');
         res.redirect(`/${systemConfig.prefixAdmin}/singers`);
     } catch (error) {
         // TODO: redirect to 404 page
@@ -127,7 +128,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [DELETE] /admin/singers/delete/:id
-export const deleteSinger = async (req: Request, res: Response): Promise<void> => {
+export const deleteSinger = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('singers_delete')) {
         res.sendStatus(400);
         return;
@@ -143,6 +144,7 @@ export const deleteSinger = async (req: Request, res: Response): Promise<void> =
             deleted: true
         })
 
+        req.flash('success', 'The singer was deleted successfully.');
         res.redirect(`back`);
     } catch (error) {
         // TODO: redirect to 404 page

@@ -1,7 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
 
 block main 
     if(role.permissions.includes('singers_create'))
+        +alert-error(5000)
         h1(class="mb-4")=pageTitle 
 
         form(
@@ -10,7 +12,7 @@ block main
             enctype="multipart/form-data"
         )
             div(class="form-group")
-                label(for="fullName") Full Name:
+                label(for="fullName") Full Name *
                 input(
                     type="text"
                     id="fullName"
@@ -23,7 +25,7 @@ block main
                 class="form-group"
                 upload-image
             )
-                label(for="avatar") Avatar:
+                label(for="avatar") Avatar
                 input(
                     type="file"
                     class="form-control-file"

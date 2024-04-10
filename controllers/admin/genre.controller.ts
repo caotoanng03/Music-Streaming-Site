@@ -35,7 +35,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 }
 
 //[POST] /admin/genres/create
-export const createPost = async (req: Request, res: Response) => {
+export const createPost = async (req, res: Response) => {
     if (!res.locals.role.permissions.includes('genres_create')) {
         res.sendStatus(400);
         return;
@@ -64,6 +64,7 @@ export const createPost = async (req: Request, res: Response) => {
     const genre = new Genre(genreObject);
     await genre.save();
 
+    req.flash('success', 'New genre was created successfully.');
     res.redirect(`/${systemConfig.prefixAdmin}/genres`)
 
 }
@@ -95,7 +96,7 @@ export const edit = async (req: Request, res: Response) => {
 }
 
 //[PATCH] /admin/genres/edit/:id
-export const editPatch = async (req: Request, res: Response): Promise<void> => {
+export const editPatch = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('genres_edit')) {
         res.sendStatus(400);
         return;
@@ -126,6 +127,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
             _id: gerneID
         }, genreObject)
 
+        req.flash('success', 'New genre was updated successfully.');
         res.redirect(`/${systemConfig.prefixAdmin}/genres`);
 
     } catch (error) {
@@ -135,7 +137,7 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
 }
 
 //[DELETE] /admin/genres/delete/:id
-export const deleteGenre = async (req: Request, res: Response): Promise<void> => {
+export const deleteGenre = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('genres_delete')) {
         res.sendStatus(400);
         return;
@@ -150,6 +152,7 @@ export const deleteGenre = async (req: Request, res: Response): Promise<void> =>
             deleted: true
         });
 
+        req.flash('success', 'The genre was deleted.')
         res.redirect(`back`)
     } catch (error) {
         // TODO: redirect to 404 page

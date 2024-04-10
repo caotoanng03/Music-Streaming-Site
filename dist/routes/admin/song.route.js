@@ -32,18 +32,19 @@ const multer_1 = __importDefault(require("multer"));
 const router = (0, express_1.Router)();
 const controller = __importStar(require("../../controllers/admin/song.controller"));
 const uploadCloud = __importStar(require("../../middlewares/admin/uploadCloud.middleware"));
+const validate = __importStar(require("../../validates/admin/song.validate"));
 const upload = (0, multer_1.default)();
 router.get("/", controller.index);
 router.get("/create", controller.create);
 router.post("/create", upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "audio", maxCount: 1 }
-]), uploadCloud.uploadFields, controller.createPost);
+]), uploadCloud.uploadFields, validate.createPost, controller.createPost);
 router.get("/edit/:id", controller.edit);
 router.patch("/edit/:id", upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "audio", maxCount: 1 }
-]), uploadCloud.uploadFields, controller.editPatch);
+]), uploadCloud.uploadFields, validate.createPost, controller.editPatch);
 router.get("/detail/:id", controller.detail);
 router.delete("/delete/:id", controller.deleteSong);
 exports.songRoutes = router;

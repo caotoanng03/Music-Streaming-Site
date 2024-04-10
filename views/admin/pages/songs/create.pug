@@ -1,7 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
 
 block main
     if(role.permissions.includes('songs_create'))
+        +alert-error(5000)
         h1(class="mb-4") #{pageTitle}
 
         form(
@@ -10,7 +12,7 @@ block main
             enctype="multipart/form-data"
         )
             div(class="form-group")
-                label(for="title") Title
+                label(for="title") Title *
                 input(
                     type="text"
                     class="form-control"
@@ -20,7 +22,7 @@ block main
                 )
 
             div(class="form-group")
-                label(for="topic") Genre
+                label(for="topic") Genre *
                 select(
                     name="topicId"
                     id="topic"
@@ -32,7 +34,7 @@ block main
                         option(value=item.id) #{item.title}
 
             div(class="form-group")
-                label(for="singer") Singer
+                label(for="singer") Singer *
                 select(
                     name="singerId"
                     id="singer"

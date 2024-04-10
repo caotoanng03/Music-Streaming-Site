@@ -1,7 +1,10 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
 
 block main
     if(role.permissions.includes('singers_view'))
+        +alert-success(5000)
+        +alert-error(5000)
         h1(class="mb-4")=pageTitle 
 
         .card.mb-3 

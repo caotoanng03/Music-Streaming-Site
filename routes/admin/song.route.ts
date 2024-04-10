@@ -3,8 +3,8 @@ import multer from "multer";
 const router: Router = Router();
 
 import * as controller from "../../controllers/admin/song.controller";
-
 import * as uploadCloud from "../../middlewares/admin/uploadCloud.middleware";
+import * as validate from "../../validates/admin/song.validate";
 
 const upload = multer();
 
@@ -19,6 +19,7 @@ router.post(
         { name: "audio", maxCount: 1 }
     ]),
     uploadCloud.uploadFields,
+    validate.createPost,
     controller.createPost
 );
 
@@ -31,6 +32,7 @@ router.patch(
         { name: "audio", maxCount: 1 }
     ]),
     uploadCloud.uploadFields,
+    validate.createPost,
     controller.editPatch
 );
 
