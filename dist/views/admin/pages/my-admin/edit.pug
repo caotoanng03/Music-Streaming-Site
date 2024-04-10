@@ -1,7 +1,9 @@
 extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
 
 block main  
     h1(class="mb-4")=pageTitle
+    +alert-error(5000)
 
     form(
         action=`/${prefixAdmin}/my-admin/edit?_method=PATCH`
@@ -17,6 +19,7 @@ block main
                 name="fullName"
                 value=(admin.fullName? admin.fullName : "")
                 class="form-control"
+                required
             )
 
         div(class="form-group")
@@ -27,10 +30,11 @@ block main
                 name="email"
                 value=(admin.email ? admin.email : "")
                 class="form-control"
+                required
             )
 
         div(class="form-group")
-            label(for="phone") Phone Number *
+            label(for="phone") Phone Number 
             input(
                 type="text"
                 id="phone"

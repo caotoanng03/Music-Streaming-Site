@@ -58,6 +58,17 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.sendStatus(400);
         return;
     }
+    const email = req.body.email;
+    const alreadyExistedAccount = yield account_model_1.default.findOne({
+        email: email,
+        deleted: false,
+        status: 'active'
+    });
+    if (alreadyExistedAccount) {
+        req.flash('error', 'Account associated with this email already existed!');
+        res.redirect('back');
+        return;
+    }
     let avatar = "";
     if (req.body.avatar) {
         avatar = req.body.avatar;
@@ -73,6 +84,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     };
     const newAccount = new account_model_1.default(accountData);
     yield newAccount.save();
+    req.flash('success', 'New admin account was created');
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
 });
 exports.createPost = createPost;
@@ -118,6 +130,7 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.password) {
         accountData['password'] = (0, md5_1.default)(req.body.password);
     }
+    req.flash('success', 'The admin account was updated successfully');
     yield account_model_1.default.updateOne({
         _id: accountId,
         deleted: false
@@ -137,6 +150,7 @@ const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }, {
         deleted: true
     });
+    req.flash('success', 'The admin account was deleted successfully');
     res.redirect(`back`);
 });
 exports.deleteAccount = deleteAccount;

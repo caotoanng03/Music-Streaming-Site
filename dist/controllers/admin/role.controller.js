@@ -54,6 +54,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     };
     const newRole = new role_model_1.default(roleData);
     yield newRole.save();
+    req.flash('success', 'New role group was created successfully');
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
 });
 exports.createPost = createPost;
@@ -94,6 +95,7 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         _id: roleID,
         deleted: false
     }, roleData);
+    req.flash('success', 'The role group was updated successfully');
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
 });
 exports.editPatch = editPatch;
@@ -109,6 +111,7 @@ const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }, {
             deleted: true
         });
+        req.flash('success', 'The role group was deleted successfully');
         res.redirect(`back`);
     }
     catch (error) {
@@ -164,6 +167,7 @@ const permissionsPatch = (req, res) => __awaiter(void 0, void 0, void 0, functio
             permissions: item.permissions
         });
     }
+    req.flash('success', 'Changes applied successfully.');
     res.redirect(`back`);
 });
 exports.permissionsPatch = permissionsPatch;

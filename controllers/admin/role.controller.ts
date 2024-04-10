@@ -32,7 +32,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [POST] /admin/roles/create
-export const createPost = async (req: Request, res: Response): Promise<void> => {
+export const createPost = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('roleGroups_create')) {
         res.sendStatus(400);
         return;
@@ -56,6 +56,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const newRole = new Role(roleData);
     await newRole.save()
 
+    req.flash('success', 'New role group was created successfully');
     res.redirect(`/${systemConfig.prefixAdmin}/roles`)
 }
 
@@ -87,7 +88,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [PATCH] /admin/roles/edit/:id
-export const editPatch = async (req: Request, res: Response): Promise<void> => {
+export const editPatch = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('roleGroups_edit')) {
         res.sendStatus(400);
         return;
@@ -113,11 +114,12 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     }, roleData);
 
+    req.flash('success', 'The role group was updated successfully');
     res.redirect(`/${systemConfig.prefixAdmin}/roles`);
 }
 
 // [DELETE] /admin/roles/delete/:id
-export const deleteRole = async (req: Request, res: Response): Promise<void> => {
+export const deleteRole = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('roleGroups_delete')) {
         res.sendStatus(400);
         return;
@@ -133,6 +135,7 @@ export const deleteRole = async (req: Request, res: Response): Promise<void> => 
             deleted: true
         });
 
+        req.flash('success', 'The role group was deleted successfully');
         res.redirect(`back`)
 
     } catch (error) {
@@ -186,7 +189,7 @@ export const permissions = async (req: Request, res: Response): Promise<void> =>
 }
 
 // [PATCH] /admin/roles/permissions
-export const permissionsPatch = async (req: Request, res: Response): Promise<void> => {
+export const permissionsPatch = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('roles_permissions')) {
         res.sendStatus(400);
         return;
@@ -202,5 +205,6 @@ export const permissionsPatch = async (req: Request, res: Response): Promise<voi
         });
     }
 
+    req.flash('success', 'Changes applied successfully.');
     res.redirect(`back`);
 }

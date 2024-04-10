@@ -1,8 +1,11 @@
 extends ../../layouts/default.pug 
 include ../../mixins/permission-grid.pug
+include ../../mixins/alert.pug
 
 block main
     if(role.permissions.includes('roles_permissions'))
+        +alert-success(5000)
+        +alert-error(5000)
         h1(class="mb-4")=pageTitle 
 
         div(class="text-right")

@@ -48,9 +48,22 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [POST] /admin/accounts/create
-export const createPost = async (req: Request, res: Response): Promise<void> => {
+export const createPost = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('accounts_create')) {
         res.sendStatus(400);
+        return;
+    }
+
+    const email: string = req.body.email;
+    const alreadyExistedAccount = await Account.findOne({
+        email: email,
+        deleted: false,
+        status: 'active'
+    });
+
+    if (alreadyExistedAccount) {
+        req.flash('error', 'Account associated with this email already existed!');
+        res.redirect('back');
         return;
     }
 
@@ -83,6 +96,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const newAccount = new Account(accountData);
     await newAccount.save();
 
+    req.flash('success', 'New admin account was created');
     res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
 }
 
@@ -116,7 +130,7 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
 }
 
 // [PATCH] /admin/accounts/edit/:id
-export const editPatch = async (req: Request, res: Response): Promise<void> => {
+export const editPatch = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('accounts_edit')) {
         res.sendStatus(400);
         return;
@@ -150,16 +164,18 @@ export const editPatch = async (req: Request, res: Response): Promise<void> => {
         accountData['password'] = md5(req.body.password);
     }
 
+    req.flash('success', 'The admin account was updated successfully');
     await Account.updateOne({
         _id: accountId,
         deleted: false
     }, accountData);
 
+
     res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
 }
 
 // [DELETE] /admin/accounts/delete/:id
-export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
+export const deleteAccount = async (req, res: Response): Promise<void> => {
     if (!res.locals.role.permissions.includes('accounts_delete')) {
         res.sendStatus(400);
         return;
@@ -174,6 +190,7 @@ export const deleteAccount = async (req: Request, res: Response): Promise<void> 
         deleted: true
     });
 
+    req.flash('success', 'The admin account was deleted successfully');
     res.redirect(`back`);
 }
 

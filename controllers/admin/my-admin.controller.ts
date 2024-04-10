@@ -27,20 +27,37 @@ export const editPatch = async (req, res: Response): Promise<void> => {
     const admin = res.locals.admin;
     const permissions = res.locals.role.permissions;
 
+    const email: string = req.body.email;
+
+    const alreadyExistedAccount = await Account.find({
+        email: email,
+        deleted: false,
+    });
+
+    if (alreadyExistedAccount.length === 1 && email !== admin.email) {
+        req.flash('error', 'This email already existed!');
+        res.redirect('back');
+        return;
+    }
+
     interface AccountInter {
         fullName: string,
         email: string,
         phone?: string,
+        avatar?: string
     }
 
     const AccountData: AccountInter = {
         fullName: req.body.fullName,
         email: req.body.email,
-        phone: req.body.phone
     }
 
     if (req.body.avatar) {
         AccountData['avatar'] = req.body.avatar;
+    }
+
+    if (req.body.phone) {
+        AccountData['phone'] = req.body.phone;
     }
 
     if (permissions.includes('roles_permissions')) {

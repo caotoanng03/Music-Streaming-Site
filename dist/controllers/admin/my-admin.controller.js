@@ -35,13 +35,25 @@ exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const admin = res.locals.admin;
     const permissions = res.locals.role.permissions;
+    const email = req.body.email;
+    const alreadyExistedAccount = yield account_model_1.default.find({
+        email: email,
+        deleted: false,
+    });
+    if (alreadyExistedAccount.length === 1 && email !== admin.email) {
+        req.flash('error', 'This email already existed!');
+        res.redirect('back');
+        return;
+    }
     const AccountData = {
         fullName: req.body.fullName,
         email: req.body.email,
-        phone: req.body.phone
     };
     if (req.body.avatar) {
         AccountData['avatar'] = req.body.avatar;
+    }
+    if (req.body.phone) {
+        AccountData['phone'] = req.body.phone;
     }
     if (permissions.includes('roles_permissions')) {
         if (req.body.roleId) {
