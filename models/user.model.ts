@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import * as generate from "../helpers/generate";
 
-const accountSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     fullName: String,
     email: String,
     password: String,
-    token: {
+    tokenUser: {
         type: String,
         default: function () {
             return generate.generateRandomString(30);
@@ -13,8 +13,10 @@ const accountSchema = new mongoose.Schema({
     },
     phone: String,
     avatar: String,
-    roleId: String,
-    status: String,
+    status: {
+        type: String,
+        default: 'active'
+    },
     deleted: {
         type: Boolean,
         default: false
@@ -22,6 +24,6 @@ const accountSchema = new mongoose.Schema({
     deletedAt: Date
 }, { timestamps: true });
 
-const Account = mongoose.model('Account', accountSchema, 'accounts');
+const User = mongoose.model('User', userSchema, 'users');
 
-export default Account;
+export default User;

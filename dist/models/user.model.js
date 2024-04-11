@@ -28,11 +28,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const generate = __importStar(require("../helpers/generate"));
-const accountSchema = new mongoose_1.default.Schema({
+const userSchema = new mongoose_1.default.Schema({
     fullName: String,
     email: String,
     password: String,
-    token: {
+    tokenUser: {
         type: String,
         default: function () {
             return generate.generateRandomString(30);
@@ -40,13 +40,15 @@ const accountSchema = new mongoose_1.default.Schema({
     },
     phone: String,
     avatar: String,
-    roleId: String,
-    status: String,
+    status: {
+        type: String,
+        default: 'active'
+    },
     deleted: {
         type: Boolean,
         default: false
     },
     deletedAt: Date
 }, { timestamps: true });
-const Account = mongoose_1.default.model('Account', accountSchema, 'accounts');
-exports.default = Account;
+const User = mongoose_1.default.model('User', userSchema, 'users');
+exports.default = User;

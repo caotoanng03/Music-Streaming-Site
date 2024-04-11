@@ -22,12 +22,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         status: 'active'
     }).select('-password -token');
 
-    const role = await Role.findOne({
-        _id: account.roleId,
-        deleted: false
-    }).select('permissions');
-
-    if (!account || role.permissions.length == 0) {
+    if (!account) {
         res.render(`admin/pages/auth/login`, {
             pageTitle: "Log In"
         });
