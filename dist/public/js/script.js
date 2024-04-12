@@ -7,7 +7,6 @@ if (profileImage) {
         subMenu.classList.toggle('open-sub-menu');
     });
 }
-
 // End Dropdown profile
 
 // APlayer
@@ -162,3 +161,19 @@ if (boxSearch) {
     );
 };
 // End Search Suggest
+
+// Show alert
+const showAlert = document.querySelector('[show-alert]');
+if (showAlert) {
+    const time = parseInt(showAlert.getAttribute('date-time')) || 3000;
+    const closetAlert = showAlert.querySelector('[close-alert]');
+
+    setTimeout(() => {
+        showAlert.classList.add('alert-hidden');
+    }, time);
+
+    closetAlert.addEventListener('click', () => {
+        showAlert.classList.add('alert-hidden');
+    });
+};
+// End Show alert

@@ -27,5 +27,7 @@ exports.userRoutes = void 0;
 const express_1 = require("express");
 const router = (0, express_1.Router)();
 const controller = __importStar(require("../../controllers/client/user.controller"));
+const validate = __importStar(require("../../validates/client/user.validate"));
 router.get('/register', controller.register);
+router.post('/register', validate.registerPost, controller.registerPost);
 exports.userRoutes = router;
