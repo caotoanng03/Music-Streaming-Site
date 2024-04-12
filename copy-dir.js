@@ -14,9 +14,9 @@ const listFolderCopy = [
 listFolderCopy.forEach(item => {
     fs.copy(item.sourceDirectory, item.targetDirectory, (err) => {
         if (err) {
-            console.error(`Lỗi sao chép thư mục ${item.sourceDirectory}:`, err);
+            console.error(`Failed to copy ${item.sourceDirectory}:`, err);
         } else {
-            console.log(`Sao chép thành công thư mục ${item.sourceDirectory}`);
+            console.log(`Succeed to copy ${item.sourceDirectory}`);
         }
     });
 });
