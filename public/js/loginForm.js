@@ -18,12 +18,14 @@ if (formBox) {
     const title = document.querySelector('.form-box .form-title');
     const form = document.getElementById('authForm');
     const fullNameInput = `<input type="text" name="email" id="email" placeholder="Your email..." required>`;
+    const linkForgotPassword = formBox.querySelector('.forgot-password');
 
     console.log(loginBtn)
 
     loginBtn.addEventListener('click', () => {
         if (loginBtn.classList.contains("disabled")) {
 
+            linkForgotPassword.style.opacity = "1";
             fullNameField.style.maxHeight = "0";
             title.textContent = "LogIn";
             registerBtn.classList.add("disabled");
@@ -41,6 +43,7 @@ if (formBox) {
 
     registerBtn.addEventListener('click', () => {
         if (registerBtn.classList.contains("disabled")) {
+            linkForgotPassword.style.opacity = "0";
 
             const input = fullNameField.querySelector('input');
             if (!input) {

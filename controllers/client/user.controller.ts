@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { Request, Response, response } from "express"
 import User from "../../models/user.model";
 import md5 from "md5";
 
@@ -88,5 +88,11 @@ export const loginPost = async (req, res: Response): Promise<void> => {
 
     res.cookie('tokenUser', user.tokenUser);
     req.flash('success', 'Successfully logged in!');
+    res.redirect('/');
+}
+
+// [GET] /user/logout
+export const logout = async (req, res: Response): Promise<void> => {
+    res.clearCookie('tokenUser');
     res.redirect('/');
 }

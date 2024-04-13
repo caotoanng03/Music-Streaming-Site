@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginPost = exports.registerPost = exports.register = void 0;
+exports.logout = exports.loginPost = exports.registerPost = exports.register = void 0;
 const user_model_1 = __importDefault(require("../../models/user.model"));
 const md5_1 = __importDefault(require("md5"));
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -74,3 +74,8 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.redirect('/');
 });
 exports.loginPost = loginPost;
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.clearCookie('tokenUser');
+    res.redirect('/');
+});
+exports.logout = logout;
