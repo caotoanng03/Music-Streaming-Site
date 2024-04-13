@@ -30,4 +30,5 @@ const controller = __importStar(require("../../controllers/client/user.controlle
 const validate = __importStar(require("../../validates/client/user.validate"));
 router.get('/register', controller.register);
 router.post('/register', validate.registerPost, controller.registerPost);
+router.post('/login', validate.loginPost, controller.loginPost);
 exports.userRoutes = router;

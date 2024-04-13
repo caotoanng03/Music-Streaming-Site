@@ -50,13 +50,17 @@ a, a:visited {
 }
 
 .header .inner-menu>ul>img {
-    width: 30px;
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
     border-radius: 50%;
     background-color: #ddd;
     padding: 2px;
     cursor: pointer;
     margin-left: 30px;
 }
+
+/* Dropdown profile */
 
 .sub-menu-wrap {
     z-index: 10000;
@@ -92,10 +96,13 @@ a, a:visited {
 
 .sub-menu-wrap .sub-menu .user-info h6 {
     font-weight: 600;
+    margin-bottom: 0;
 }
 
 .sub-menu-wrap .sub-menu .user-info img {
     width: 25px;
+    height: 25px;
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 15px;
 }
@@ -113,7 +120,7 @@ a, a:visited {
     align-items: center;
     text-decoration: none;
     color: #212121;
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 .sub-menu-wrap .sub-menu .sub-menu-link a {
@@ -121,8 +128,22 @@ a, a:visited {
     color: #333;
 }
 
-.sub-menu-wrap .sub-menu .sub-menu-link:hover a {
+.sub-menu-wrap .sub-menu .sub-menu-link p {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.sub-menu-wrap .sub-menu .sub-menu-link:hover p {
     font-weight: 600;
+}
+
+.sub-menu-wrap .sub-menu .sub-menu-link span {
+    font-size: 18px;
+    transition: transform 0.5s;
+}
+
+.sub-menu-wrap .sub-menu .sub-menu-link:hover span {
+    transform: translateX(5px);
 }
 
 /* End Header */

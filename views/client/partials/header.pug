@@ -1,3 +1,5 @@
+include ../mixins/dropdown-profile-item.pug
+
 header.header
     .container
         .row.align-items-center
@@ -51,14 +53,23 @@ header.header
                         li 
                             a(href="/favorite-songs") Favorite
 
-                        img(class="user-pic" src="/images/default-user.png" alt="default user image")
+                        //- dropdown profile
+                        img(
+                            class="user-pic" 
+                            src=(user && user.avatar? user.avatar: "/images/default-user.png") 
+                            alt=(user && user.avatar? user.fullName: "default user image")
+                        )
 
                         .sub-menu-wrap
-                            .sub-menu 
-                                .user-info 
-                                    h6 Unloggedin User
-                                hr 
-                                .sub-menu-link 
-                                    a(
-                                        href="/user/register"
-                                    ) Register / Login
+                            .sub-menu
+                                if(user)
+                                    .user-info
+                                        img(src=(user && user.avatar? user.avatar: "/images/default-user.png"))
+                                        h6 #{user && user.fullName ? user.fullName : "Unloggedin User"}
+                                    hr 
+
+                                    +link-item("/user/profile", "Profile Settings")
+                                    +link-item("/user/logout", "Logout")
+                                else 
+                                    +link-item("/user/register", "Register/Login")
+

@@ -8,7 +8,7 @@ export const loginPost = (req, res: Response, next: NextFunction) => {
         res.redirect('back');
         return;
     }
-    if (isValidEmail(req.body.email)) {
+    if (!isValidEmail(req.body.email)) {
         req.flash('error', 'Email must be in proper format!')
         res.redirect('back');
         return;

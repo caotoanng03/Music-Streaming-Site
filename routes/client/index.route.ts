@@ -6,7 +6,11 @@ import { searchRoutes } from "./search.route";
 import { homeRoutes } from "./home.route";
 import { userRoutes } from "./user.route";
 
+import * as userMiddleware from "../../middlewares/user/user.middleware";
+
 const clientRoutes = (app: Express): void => {
+    app.use(userMiddleware.userInfo);
+
     app.use(`/`, homeRoutes);
 
     app.use(`/genres`, genreRoutes);
