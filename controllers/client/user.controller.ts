@@ -14,6 +14,13 @@ export const register = async (req: Request, res: Response) => {
 
 }
 
+// [GET] /user/login
+export const login = async (req: Request, res: Response) => {
+    res.render('client/pages/user/index', {
+        pageTitle: 'Register/ Login'
+    });
+}
+
 // [POST] /user/register
 export const registerPost = async (req, res: Response): Promise<void> => {
 

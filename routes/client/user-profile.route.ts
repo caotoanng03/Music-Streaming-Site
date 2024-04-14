@@ -5,7 +5,7 @@ const router: Router = Router();
 const upload = multer();
 
 import * as controller from "../../controllers/client/user-profile.controller";
-import * as uploadCloud from "../../middlewares/user/uploadCloud.middleware";
+import * as uploadCloud from "../../middlewares/client/uploadCloud.middleware";
 
 
 router.get('/', controller.profile)

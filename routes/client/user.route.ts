@@ -7,6 +7,8 @@ import * as validate from "../../validates/client/user.validate";
 
 router.get('/register', controller.register);
 
+router.get('/login', controller.register);
+
 router.post(
     '/register',
     validate.registerPost,

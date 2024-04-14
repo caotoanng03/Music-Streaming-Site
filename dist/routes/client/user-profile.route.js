@@ -32,7 +32,7 @@ const multer_1 = __importDefault(require("multer"));
 const router = (0, express_1.Router)();
 const upload = (0, multer_1.default)();
 const controller = __importStar(require("../../controllers/client/user-profile.controller"));
-const uploadCloud = __importStar(require("../../middlewares/user/uploadCloud.middleware"));
+const uploadCloud = __importStar(require("../../middlewares/client/uploadCloud.middleware"));
 router.get('/', controller.profile);
 router.get('/edit', controller.editProfile);
 router.post('/edit', upload.single('avatar'), uploadCloud.uploadSingle, controller.editProfilePost);
