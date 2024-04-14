@@ -7,7 +7,8 @@ import Singer from "../../models/singer.model";
 export const index = async (req: Request, res: Response): Promise<void> => {
 
     const favoriteSongs = await FavoriteSong.find({
-        // userId: userId
+        // userId:
+        userId: res.locals.user.id,
         deleted: false
     });
 

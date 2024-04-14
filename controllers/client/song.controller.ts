@@ -70,10 +70,15 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     }).select("title");
 
-    const favoriteSong = await FavoriteSong.findOne({
-        // userId: "",
-        songId: song.id
-    });
+    let favoriteSong;
+
+    if (res.locals.user) {
+        favoriteSong = await FavoriteSong.findOne({
+            // userId: "",
+            userId: res.locals.user.id,
+            songId: song.id
+        });
+    }
 
     song["isFavoriteSong"] = favoriteSong ? true : false;
 
@@ -112,6 +117,14 @@ export const like = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /songs/favorite/:favoriteType/:songId
 export const favorite = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.user) {
+        res.json({
+            code: 400,
+            message: "Unthorized user!"
+        });
+        return;
+    }
+
     const songId: string = req.params.songId;
     const favoriteType: string = req.params.favoriteType;
 
@@ -124,6 +137,7 @@ export const favorite = async (req: Request, res: Response): Promise<void> => {
             if (!existingFavSong) {
                 const newFavSong = new FavoriteSong({
                     // userId:
+                    userId: res.locals.user.id,
                     songId: songId
                 });
                 await newFavSong.save();

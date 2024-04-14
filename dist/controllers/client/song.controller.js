@@ -72,9 +72,13 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         status: "active",
         deleted: false
     }).select("title");
-    const favoriteSong = yield favorite_song_model_1.default.findOne({
-        songId: song.id
-    });
+    let favoriteSong;
+    if (res.locals.user) {
+        favoriteSong = yield favorite_song_model_1.default.findOne({
+            userId: res.locals.user.id,
+            songId: song.id
+        });
+    }
     song["isFavoriteSong"] = favoriteSong ? true : false;
     res.render("client/pages/songs/detail", {
         pageTitle: "Detail | " + song.title,
@@ -104,6 +108,13 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.like = like;
 const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.user) {
+        res.json({
+            code: 400,
+            message: "Unthorized user!"
+        });
+        return;
+    }
     const songId = req.params.songId;
     const favoriteType = req.params.favoriteType;
     switch (favoriteType) {
@@ -113,6 +124,7 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             if (!existingFavSong) {
                 const newFavSong = new favorite_song_model_1.default({
+                    userId: res.locals.user.id,
                     songId: songId
                 });
                 yield newFavSong.save();

@@ -108,6 +108,14 @@ if (listButtonFavorite) {
             fetch(link, option)
                 .then(res => res.json())
                 .then(data => {
+                    if (data.code == 400) {
+                        const doesAgree = confirm('Please login to add favorite songs to your list!');
+                        if (doesAgree) {
+                            window.location.href = `/user/register`
+                        }
+                        return;
+                    }
+
                     if (data.code == 200) {
                         buttonFavorite.classList.toggle("active");
                     }
