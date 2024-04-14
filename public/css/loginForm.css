@@ -6,7 +6,7 @@
 
 .form-box {
     width: 100%;
-    max-width: 450px;
+    max-width: 400px;
     position: absolute;
     top: 45%;
     left: 50%;
@@ -51,7 +51,7 @@
 
 .form-box .input-group .forgot-password {
     opacity: 0;
-    transform: opacity 1s;
+    transition: opacity 1s;
 }
 
 .form-box .input-group .input-field input {
@@ -76,6 +76,11 @@
 .form-box .input-group p>a {
     text-decoration: none;
     color: #3c00a0;
+    transition: color 0.5s;
+}
+
+.form-box .input-group p>a:hover {
+    color: #a689d6;
 }
 
 .form-box .btn-field {
