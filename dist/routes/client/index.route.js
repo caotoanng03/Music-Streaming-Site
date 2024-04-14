@@ -32,8 +32,10 @@ const user_route_1 = require("./user.route");
 const user_profile_route_1 = require("./user-profile.route");
 const userMiddleware = __importStar(require("../../middlewares/client/user.middleware"));
 const authMiddleware = __importStar(require("../../middlewares/client/auth.middleware"));
+const settingMiddleware = __importStar(require("../../middlewares/client/setting.middleware"));
 const clientRoutes = (app) => {
     app.use(userMiddleware.userInfo);
+    app.use(settingMiddleware.settingGeneral);
     app.use(`/`, home_route_1.homeRoutes);
     app.use(`/genres`, genre_route_1.genreRoutes);
     app.use(`/songs`, song_route_1.songRoutes);

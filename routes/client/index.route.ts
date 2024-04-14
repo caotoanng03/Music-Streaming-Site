@@ -9,9 +9,11 @@ import { userProfileRoutes } from "./user-profile.route";
 
 import * as userMiddleware from "../../middlewares/client/user.middleware";
 import * as authMiddleware from "../../middlewares/client/auth.middleware";
+import * as settingMiddleware from "../../middlewares/client/setting.middleware";
 
 const clientRoutes = (app: Express): void => {
     app.use(userMiddleware.userInfo);
+    app.use(settingMiddleware.settingGeneral);
 
     app.use(`/`, homeRoutes);
 

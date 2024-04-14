@@ -9,13 +9,16 @@ import { singerRoutes } from "./singer.route";
 import { roleRoutes } from "./role.route";
 import { accountRoutes } from "./account.route";
 import { authRoutes } from "./auth.route";
+import { myAdminRoutes } from "./my-admin.route";
+import { userRoutes } from "./user.route";
+import { settingsRoutes } from "./setting.route";
 
 import * as authController from "../../controllers/admin/auth.controller";
 import * as authMiddleware from "../../middlewares/admin/auth.middleware";
-import { myAdminRoutes } from "./my-admin.route";
-import { userRoutes } from "./user.route";
+import * as settingMiddlware from "../../middlewares/client/setting.middleware";
 
 const adminRoutes = (app: Express): void => {
+    app.use(settingMiddlware.settingGeneral);
 
     const PATH_ADMIN = `/${systemConfig.prefixAdmin}`;
 
@@ -40,6 +43,8 @@ const adminRoutes = (app: Express): void => {
     app.use(`${PATH_ADMIN}/my-admin`, authMiddleware.requireAuth, myAdminRoutes);
 
     app.use(`${PATH_ADMIN}/users`, authMiddleware.requireAuth, userRoutes);
+
+    app.use(`${PATH_ADMIN}/settings`, authMiddleware.requireAuth, settingsRoutes);
 
 }
 
