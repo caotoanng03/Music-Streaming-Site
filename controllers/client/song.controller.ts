@@ -92,6 +92,14 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
 
 // [PATCH] /songs/like/:typeLike/:songId
 export const like = async (req: Request, res: Response): Promise<void> => {
+    if (!res.locals.user) {
+        res.json({
+            code: 400,
+            message: "Unthorized user!"
+        });
+        return;
+    }
+
     const songId: string = req.params.songId;
     const typeLike: string = req.params.typeLike;
 
@@ -101,17 +109,22 @@ export const like = async (req: Request, res: Response): Promise<void> => {
         deleted: false
     });
 
-    const newLike = typeLike == "like" ? song.like + 1 : song.like - 1
+    if (typeLike == "like") {
+        song.like.push(res.locals.user.id)
+    } else {
+        const index = song.like.findIndex(e => e === res.locals.user.id);
+        song.like.splice(index, 1);
+    }
 
     await Song.updateOne({
         _id: songId
-    }, { like: newLike });
+    }, { like: song.like });
     // like: ["id_user1"], ["id-user2"]
 
     res.json({
         code: 200,
         message: "Success",
-        like: newLike
+        like: song.like.length
     });
 }
 

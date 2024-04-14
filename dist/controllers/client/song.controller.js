@@ -89,6 +89,13 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.detail = detail;
 const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.user) {
+        res.json({
+            code: 400,
+            message: "Unthorized user!"
+        });
+        return;
+    }
     const songId = req.params.songId;
     const typeLike = req.params.typeLike;
     const song = yield song_model_1.default.findOne({
@@ -96,14 +103,20 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         status: "active",
         deleted: false
     });
-    const newLike = typeLike == "like" ? song.like + 1 : song.like - 1;
+    if (typeLike == "like") {
+        song.like.push(res.locals.user.id);
+    }
+    else {
+        const index = song.like.findIndex(e => e === res.locals.user.id);
+        song.like.splice(index, 1);
+    }
     yield song_model_1.default.updateOne({
         _id: songId
-    }, { like: newLike });
+    }, { like: song.like });
     res.json({
         code: 200,
         message: "Success",
-        like: newLike
+        like: song.like.length
     });
 });
 exports.like = like;

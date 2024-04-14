@@ -13,8 +13,8 @@ const songSchema = new mongoose_1.default.Schema({
     singerId: String,
     topicId: String,
     like: {
-        type: Number,
-        default: 0
+        type: Array,
+        default: []
     },
     listen: {
         type: Number,

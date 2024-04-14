@@ -78,6 +78,14 @@ if (buttonLike) {
         fetch(link, option)
             .then(res => res.json())
             .then(data => {
+                if (data.code == 400) {
+                    const doesAgree = confirm('Please login to like this song!');
+                    if (doesAgree) {
+                        window.location.href = `/user/register`
+                    }
+                    return;
+                }
+
                 if (data.code == 200) {
                     const span = buttonLike.querySelector("span");
                     span.innerHTML = `${data.like} Like`;
@@ -109,7 +117,7 @@ if (listButtonFavorite) {
                 .then(res => res.json())
                 .then(data => {
                     if (data.code == 400) {
-                        const doesAgree = confirm('Please login to add favorite songs to your list!');
+                        const doesAgree = confirm('Please login to add this song to your list!');
                         if (doesAgree) {
                             window.location.href = `/user/register`
                         }
