@@ -126,8 +126,10 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
         });
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     };
 }
 
@@ -177,8 +179,10 @@ export const editPatch = async (req, res: Response): Promise<void> => {
         res.redirect(`/${systemConfig.prefixAdmin}/songs`);
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     };
 
 };
@@ -216,8 +220,10 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         });
 
     } catch (error) {
-        // TODO: redirect 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 
@@ -240,7 +246,9 @@ export const deleteSong = async (req, res: Response): Promise<void> => {
         req.flash('success', 'The song was deleted successfully.');
         res.redirect(`back`);
     } catch (error) {
-        // TODO: redirect 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }

@@ -91,8 +91,10 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
         });
 
     } catch (error) {
-        // TODO: 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/users`);
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 
@@ -129,14 +131,25 @@ export const editPatch = async (req, res: Response): Promise<void> => {
         userData['password'] = md5(req.body.password);
     }
 
-    await User.updateOne({
-        _id: userId,
-        deleted: false
-    }, userData);
+    try {
+
+        await User.updateOne({
+            _id: userId,
+            deleted: false
+        }, userData);
 
 
-    req.flash('success', 'The user account was updated successfully');
-    res.redirect(`/${systemConfig.prefixAdmin}/users`);
+        req.flash('success', 'The user account was updated successfully');
+        res.redirect(`/${systemConfig.prefixAdmin}/users`);
+
+    } catch (error) {
+
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
+
 }
 
 // [DELETE] /admin/users/delete/:id
@@ -148,15 +161,24 @@ export const deleteUser = async (req, res: Response): Promise<void> => {
 
     const userId: string = `${req.params.id}`;
 
-    await User.updateOne({
-        _id: userId,
-        deleted: false
-    }, {
-        deleted: true
-    });
+    try {
+        await User.updateOne({
+            _id: userId,
+            deleted: false
+        }, {
+            deleted: true
+        });
 
-    req.flash('success', 'The account was deleted successfully');
-    res.redirect(`back`);
+        req.flash('success', 'The account was deleted successfully');
+        res.redirect(`back`);
+    } catch (error) {
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
+
+
 
 }
 
@@ -181,6 +203,8 @@ export const detail = async (req, res: Response): Promise<void> => {
         })
     } catch (error) {
         // 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/users`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }

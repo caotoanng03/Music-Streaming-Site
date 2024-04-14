@@ -82,8 +82,10 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
         })
 
     } catch (error) {
-        //  TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/roles`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 
 
@@ -111,13 +113,22 @@ export const editPatch = async (req, res: Response): Promise<void> => {
         roleData['description'] = req.body.desc;
     }
 
-    await Role.updateOne({
-        _id: roleID,
-        deleted: false
-    }, roleData);
+    try {
 
-    req.flash('success', 'The role group was updated successfully');
-    res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+        await Role.updateOne({
+            _id: roleID,
+            deleted: false
+        }, roleData);
+
+        req.flash('success', 'The role group was updated successfully');
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+
+    } catch (error) {
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 }
 
 // [DELETE] /admin/roles/delete/:id
@@ -141,8 +152,10 @@ export const deleteRole = async (req, res: Response): Promise<void> => {
         res.redirect(`back`)
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/roles`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 
@@ -168,8 +181,10 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         })
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/roles`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 

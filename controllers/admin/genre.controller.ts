@@ -90,8 +90,10 @@ export const edit = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 
@@ -131,7 +133,10 @@ export const editPatch = async (req, res: Response): Promise<void> => {
         res.redirect(`/${systemConfig.prefixAdmin}/genres`);
 
     } catch (error) {
-        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 
 }
@@ -155,8 +160,10 @@ export const deleteGenre = async (req, res: Response): Promise<void> => {
         req.flash('success', 'The genre was deleted.')
         res.redirect(`back`)
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 
@@ -188,7 +195,9 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         })
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/genres`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }

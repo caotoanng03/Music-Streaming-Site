@@ -79,7 +79,9 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/users`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.edit = edit;
@@ -101,12 +103,19 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.password) {
         userData['password'] = (0, md5_1.default)(req.body.password);
     }
-    yield user_model_1.default.updateOne({
-        _id: userId,
-        deleted: false
-    }, userData);
-    req.flash('success', 'The user account was updated successfully');
-    res.redirect(`/${config_1.systemConfig.prefixAdmin}/users`);
+    try {
+        yield user_model_1.default.updateOne({
+            _id: userId,
+            deleted: false
+        }, userData);
+        req.flash('success', 'The user account was updated successfully');
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/users`);
+    }
+    catch (error) {
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 });
 exports.editPatch = editPatch;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -115,14 +124,21 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return;
     }
     const userId = `${req.params.id}`;
-    yield user_model_1.default.updateOne({
-        _id: userId,
-        deleted: false
-    }, {
-        deleted: true
-    });
-    req.flash('success', 'The account was deleted successfully');
-    res.redirect(`back`);
+    try {
+        yield user_model_1.default.updateOne({
+            _id: userId,
+            deleted: false
+        }, {
+            deleted: true
+        });
+        req.flash('success', 'The account was deleted successfully');
+        res.redirect(`back`);
+    }
+    catch (error) {
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 });
 exports.deleteUser = deleteUser;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -142,7 +158,9 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/users`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.detail = detail;

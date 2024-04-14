@@ -124,8 +124,10 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
         });
 
     } catch (error) {
-        //TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/accounts`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }
 
@@ -164,14 +166,25 @@ export const editPatch = async (req, res: Response): Promise<void> => {
         accountData['password'] = md5(req.body.password);
     }
 
-    await Account.updateOne({
-        _id: accountId,
-        deleted: false
-    }, accountData);
+    try {
+        await Account.updateOne({
+            _id: accountId,
+            deleted: false
+        }, {
+            deleted: true
+        });
+
+        req.flash('success', 'The admin account was deleted successfully');
+        res.redirect(`back`);
+    } catch (error) {
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 
 
-    req.flash('success', 'The admin account was updated successfully');
-    res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
+
 }
 
 // [DELETE] /admin/accounts/delete/:id
@@ -183,15 +196,23 @@ export const deleteAccount = async (req, res: Response): Promise<void> => {
 
     const accountId: string = `${req.params.id}`;
 
-    await Account.updateOne({
-        _id: accountId,
-        deleted: false
-    }, {
-        deleted: true
-    });
+    try {
+        await Account.updateOne({
+            _id: accountId,
+            deleted: false
+        }, {
+            deleted: true
+        });
 
-    req.flash('success', 'The admin account was deleted successfully');
-    res.redirect(`back`);
+        req.flash('success', 'The admin account was deleted successfully');
+        res.redirect(`back`);
+
+    } catch (error) {
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 }
 
 // [GET] /admin/accounts/detail/:id
@@ -222,7 +243,9 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
         })
 
     } catch (error) {
-        // TODO: redirect to 404 page
-        res.redirect(`/${systemConfig.prefixAdmin}/accounts`)
+        // 404 page
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 }

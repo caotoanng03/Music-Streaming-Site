@@ -110,7 +110,9 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
     ;
 });
@@ -146,7 +148,9 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
     ;
 });
@@ -178,7 +182,9 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.detail = detail;
@@ -198,7 +204,9 @@ const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.redirect(`back`);
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/songs`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.deleteSong = deleteSong;

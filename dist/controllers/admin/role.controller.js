@@ -75,7 +75,9 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.edit = edit;
@@ -91,12 +93,19 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.desc) {
         roleData['description'] = req.body.desc;
     }
-    yield role_model_1.default.updateOne({
-        _id: roleID,
-        deleted: false
-    }, roleData);
-    req.flash('success', 'The role group was updated successfully');
-    res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+    try {
+        yield role_model_1.default.updateOne({
+            _id: roleID,
+            deleted: false
+        }, roleData);
+        req.flash('success', 'The role group was updated successfully');
+        res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+    }
+    catch (error) {
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 });
 exports.editPatch = editPatch;
 const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -115,7 +124,9 @@ const deleteRole = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.redirect(`back`);
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.deleteRole = deleteRole;
@@ -136,7 +147,9 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.detail = detail;

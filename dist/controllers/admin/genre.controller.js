@@ -78,7 +78,9 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.edit = edit;
@@ -105,7 +107,9 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.editPatch = editPatch;
@@ -125,7 +129,9 @@ const deleteGenre = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.redirect(`back`);
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.deleteGenre = deleteGenre;
@@ -151,7 +157,9 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/genres`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.detail = detail;

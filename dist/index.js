@@ -54,6 +54,11 @@ app.use("/tinymce", express_1.default.static(path_1.default.join(__dirname, "nod
 app.locals.prefixAdmin = config_1.systemConfig.prefixAdmin;
 (0, index_route_1.default)(app);
 (0, index_route_2.default)(app);
+app.get('*', (req, res) => {
+    res.render('errors/404', {
+        pageTitle: '404 Not Found'
+    });
+});
 app.listen(port, () => {
     console.log(`app listening on port ${port}`);
 });

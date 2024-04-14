@@ -107,7 +107,9 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.edit = edit;
@@ -130,12 +132,21 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.password) {
         accountData['password'] = (0, md5_1.default)(req.body.password);
     }
-    yield account_model_1.default.updateOne({
-        _id: accountId,
-        deleted: false
-    }, accountData);
-    req.flash('success', 'The admin account was updated successfully');
-    res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
+    try {
+        yield account_model_1.default.updateOne({
+            _id: accountId,
+            deleted: false
+        }, {
+            deleted: true
+        });
+        req.flash('success', 'The admin account was deleted successfully');
+        res.redirect(`back`);
+    }
+    catch (error) {
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 });
 exports.editPatch = editPatch;
 const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -144,14 +155,21 @@ const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     const accountId = `${req.params.id}`;
-    yield account_model_1.default.updateOne({
-        _id: accountId,
-        deleted: false
-    }, {
-        deleted: true
-    });
-    req.flash('success', 'The admin account was deleted successfully');
-    res.redirect(`back`);
+    try {
+        yield account_model_1.default.updateOne({
+            _id: accountId,
+            deleted: false
+        }, {
+            deleted: true
+        });
+        req.flash('success', 'The admin account was deleted successfully');
+        res.redirect(`back`);
+    }
+    catch (error) {
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
+    }
 });
 exports.deleteAccount = deleteAccount;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -176,7 +194,9 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
+        res.render('errors/404', {
+            pageTitle: '404 Not Found'
+        });
     }
 });
 exports.detail = detail;
