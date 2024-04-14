@@ -2,6 +2,12 @@
     box-sizing: border-box;
 }
 
+table tbody tr td img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
 /* Header */
 .header {
     background: #202020;

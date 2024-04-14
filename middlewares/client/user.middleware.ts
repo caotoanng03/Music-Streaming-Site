@@ -5,11 +5,14 @@ export const userInfo = async (req: Request, res: Response, next: NextFunction):
     if (req.cookies.tokenUser) {
         const user = await User.findOne({
             tokenUser: req.cookies.tokenUser,
-            deleted: false
+            deleted: false,
+            status: 'active'
         }).select('-password');
 
         if (user) {
             res.locals.user = user;
+        } else {
+            res.clearCookie('tokenUser');
         }
 
     }

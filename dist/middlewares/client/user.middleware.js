@@ -18,10 +18,14 @@ const userInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     if (req.cookies.tokenUser) {
         const user = yield user_model_1.default.findOne({
             tokenUser: req.cookies.tokenUser,
-            deleted: false
+            deleted: false,
+            status: 'active'
         }).select('-password');
         if (user) {
             res.locals.user = user;
+        }
+        else {
+            res.clearCookie('tokenUser');
         }
     }
     next();

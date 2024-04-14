@@ -144,6 +144,8 @@ export const favorite = async (req: Request, res: Response): Promise<void> => {
     switch (favoriteType) {
         case "favorite":
             const existingFavSong = await FavoriteSong.findOne({
+                // userId - bug here
+                userId: res.locals.user.id,
                 songId: songId
             });
 

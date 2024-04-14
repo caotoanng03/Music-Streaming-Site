@@ -20,7 +20,9 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         return;
     }
     const user = yield user_model_1.default.findOne({
-        tokenUser: req.cookies.tokenUser
+        tokenUser: req.cookies.tokenUser,
+        deleted: false,
+        status: 'active'
     });
     if (!user) {
         res.redirect(`/user/login`);

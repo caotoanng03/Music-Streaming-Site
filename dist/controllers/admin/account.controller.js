@@ -130,11 +130,11 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.password) {
         accountData['password'] = (0, md5_1.default)(req.body.password);
     }
-    req.flash('success', 'The admin account was updated successfully');
     yield account_model_1.default.updateOne({
         _id: accountId,
         deleted: false
     }, accountData);
+    req.flash('success', 'The admin account was updated successfully');
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
 });
 exports.editPatch = editPatch;

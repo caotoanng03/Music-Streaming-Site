@@ -164,13 +164,13 @@ export const editPatch = async (req, res: Response): Promise<void> => {
         accountData['password'] = md5(req.body.password);
     }
 
-    req.flash('success', 'The admin account was updated successfully');
     await Account.updateOne({
         _id: accountId,
         deleted: false
     }, accountData);
 
 
+    req.flash('success', 'The admin account was updated successfully');
     res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
 }
 

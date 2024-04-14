@@ -1,0 +1,80 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    if(role.permissions.includes('users_view'))
+        +alert-success(5000)
+        +alert-error(5000)
+        h1(class="mb-4")=pageTitle 
+
+        .card.mb-3 
+            .card-header Here is the list of user accounts 
+            .card-body
+                .row 
+                    .col-8 
+
+                    .col-4.text-right
+                        if(role.permissions.includes('users_create'))
+                            a(
+                                href=`/${prefixAdmin}/users/create`
+                                class="btn btn-outline-success"
+                            ) + New User Account
+
+                table(
+                    class="table table-hover table-sm"
+                )
+                    thead
+                        tr
+                            th #
+                            th Avatar
+                            th Full Name 
+                            th Status 
+                            th Action 
+
+                    tbody 
+                        each item, index in users
+                            tr 
+                                td #{index + 1}
+                                td 
+                                    img(
+                                        src=(item.avatar ? item.avatar : "/images/default-user.png")
+                                        alt=item.fullName
+                                    )
+                                td #{item.fullName}
+                                td 
+                                    if(item.status == "active")
+                                        a(
+                                            href="javascript:;"
+                                            class="badge badge-success"
+                                        ) Active
+                                    else 
+                                        a(
+                                            href="javascript:;"
+                                            class="badge badge-danger"
+                                        ) Inactive
+
+                                td
+                                    if(role.permissions.includes('users_view'))
+                                        a(
+                                            class="btn btn-dark btn-sm"
+                                            href=`/${prefixAdmin}/users/detail/${item.id}`
+                                        ) Detail
+                                    if(role.permissions.includes('users_edit'))
+                                        a(
+                                            class="btn btn-dark btn-sm ml-1"
+                                            href=`/${prefixAdmin}/users/edit/${item.id}`
+                                        ) Edit 
+                                    if(role.permissions.includes('users_delete'))
+                                        Button(
+                                            class="btn btn-danger btn-sm ml-1"
+                                            data-id=item.id
+                                            button-delete
+                                        ) Delete
+
+
+                form(
+                    id="form-delete-item"
+                    action=""
+                    data-path=`/${prefixAdmin}/users/delete`
+                    method="POST"
+                )

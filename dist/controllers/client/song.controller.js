@@ -133,6 +133,7 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     switch (favoriteType) {
         case "favorite":
             const existingFavSong = yield favorite_song_model_1.default.findOne({
+                userId: res.locals.user.id,
                 songId: songId
             });
             if (!existingFavSong) {

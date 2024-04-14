@@ -7,7 +7,9 @@ export const requireAuth = async (req, res, next) => {
     }
 
     const user = await User.findOne({
-        tokenUser: req.cookies.tokenUser
+        tokenUser: req.cookies.tokenUser,
+        deleted: false,
+        status: 'active'
     });
 
     if (!user) {
