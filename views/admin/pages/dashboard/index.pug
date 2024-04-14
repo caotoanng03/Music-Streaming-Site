@@ -5,6 +5,57 @@ block main
 
     hr 
 
-    div #{admin.fullName}
-    div #{role.title}
-    textarea(name="permissions" cols="50" rows="10")=role.permissions
+    .row.mt-4
+    .col-12
+        .card.mb-4
+            .card-header Account Information
+            .card-body
+                if(admin.avatar)
+                    img(
+                        src=admin.avatar
+                        style="height: 100px;margin-bottom: 15px;"
+                    )
+                if(admin.fullName)
+                    p Full Name: <b>#{admin.fullName}</b>
+                if(admin.email)
+                    p Email: <b>#{admin.email}</b>
+                if(admin.phone)
+                    p Phone Number: <b>#{admin.phone}</b>
+                if(role.title)
+                    p Role Group: <b>#{role.title}</b>
+
+    if(role.permissions.includes('songs_view'))
+        .col-6
+            .card.mb-4
+                .card-header Song Stats
+                .card-body
+                    p Quantity: <b>#{statistic.song.total}</b>
+                    p Active: <b>#{statistic.song.active}</b>
+                    p Inactive: <b>#{statistic.song.inactive}</b>
+
+    if(role.permissions.includes('singers_view'))
+        .col-6
+            .card.mb-4
+                .card-header Singer Stats
+                .card-body
+                    p Quantity: <b>#{statistic.singer.total}</b>
+                    p Active: <b>#{statistic.singer.active}</b>
+                    p Inactive: <b>#{statistic.singer.inactive}</b>
+
+    if(role.permissions.includes('accounts_view'))
+        .col-6
+            .card.mb-4
+                .card-header Admin Account
+                .card-body
+                    p Quantity: <b>#{statistic.account.total}</b>
+                    p Active: <b>#{statistic.account.active}</b>
+                    p Inactive: <b>#{statistic.account.inactive}</b>
+
+    if(role.permissions.includes('users_view'))
+        .col-6
+            .card.mb-4
+                .card-header Client Account
+                .card-body
+                    p Quantity: <b>#{statistic.user.total}</b>
+                    p Active: <b>#{statistic.user.active}</b>
+                    p Inactive: <b>#{statistic.user.inactive}</b>
