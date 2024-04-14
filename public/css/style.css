@@ -153,6 +153,25 @@ a, a:visited {
 
 /* End Header */
 
+/* Frofile Settings */
+
+.card .user-info .user-pic {
+    width: 100%;
+    height: 150px;
+}
+
+.card .user-info img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+
+/* End Frofile Settings */
+
 /* Footer */
 .footer {
     background: #333;
@@ -583,3 +602,19 @@ a, a:visited {
 }
 
 /* End Alert */
+
+/* Image Preview */
+.image-preview {
+    width: 150px;
+    height: auto;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.image-preview[src=""] {
+    display: none;
+}
+
+/* End Image Preview */

@@ -1,6 +1,6 @@
 import { Router } from "express";
-
 const router: Router = Router();
+
 
 import * as controller from "../../controllers/client/user.controller";
 import * as validate from "../../validates/client/user.validate";
@@ -47,4 +47,5 @@ router.post(
     validate.resetPasswordPost,
     controller.resetPasswordPost
 );
+
 export const userRoutes: Router = router;

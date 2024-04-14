@@ -22,23 +22,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const genre_route_1 = require("./genre.route");
-const song_route_1 = require("./song.route");
-const favorite_song_route_1 = require("./favorite-song.route");
-const search_route_1 = require("./search.route");
-const home_route_1 = require("./home.route");
-const user_route_1 = require("./user.route");
-const user_profile_route_1 = require("./user-profile.route");
-const userMiddleware = __importStar(require("../../middlewares/user/user.middleware"));
-const clientRoutes = (app) => {
-    app.use(userMiddleware.userInfo);
-    app.use(`/`, home_route_1.homeRoutes);
-    app.use(`/genres`, genre_route_1.genreRoutes);
-    app.use(`/songs`, song_route_1.songRoutes);
-    app.use(`/favorite-songs`, favorite_song_route_1.favoriteSongRoutes);
-    app.use(`/search`, search_route_1.searchRoutes);
-    app.use(`/user`, user_route_1.userRoutes);
-    app.use(`/user/profile`, user_profile_route_1.userProfileRoutes);
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.default = clientRoutes;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userProfileRoutes = void 0;
+const express_1 = require("express");
+const multer_1 = __importDefault(require("multer"));
+const router = (0, express_1.Router)();
+const upload = (0, multer_1.default)();
+const controller = __importStar(require("../../controllers/client/user-profile.controller"));
+const uploadCloud = __importStar(require("../../middlewares/user/uploadCloud.middleware"));
+router.get('/', controller.profile);
+router.get('/edit', controller.editProfile);
+router.post('/edit', upload.single('avatar'), uploadCloud.uploadSingle, controller.editProfilePost);
+exports.userProfileRoutes = router;
