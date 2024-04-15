@@ -1,32 +1,32 @@
 footer.footer
-    .footer-contact
-        .contact-item
-            strong Phone:
-            span= settingGeneral.phone
+    .container
+        .row
+            .footer-col
+                h4 Contact
+                ul
+                    li
+                        span Address: #{settingGeneral.address}
+                    li
+                        span Tel: #{settingGeneral.phone}
+                    li
+                        a(href="mailto:" + settingGeneral.email) Email: #{settingGeneral.email}
+            .footer-col
+                h4 Follow Us
+                .social-links
+                    a(href=settingGeneral.facebook)
+                        i.fab.fa-facebook-f
+                    a(href=settingGeneral.twitter)
+                        i.fa-brands.fa-square-x-twitter
+                    a(href=settingGeneral.instagram)
+                        i.fab.fa-instagram
+                    a(href=settingGeneral.linkedin)
+                        i.fab.fa-linkedin-in
+                br   
+                ul
+                    li 
+                        span © #{settingGeneral.copyright}
 
-        .contact-item
-            strong Email:
-            a(href="mailto:" + settingGeneral.email)= settingGeneral.email
-
-        .contact-item
-            strong Address:
-            | #{settingGeneral.address}
-
-        .footer-copyright
-            p
-                | ©
-                | #{settingGeneral.copyright}
-
-    .footer-socials
-        .socials-ins
-            strong Instagram:
-                a(href=settingGeneral.instagram)= settingGeneral.instagram
-        .socials-linkedin
-            strong Linkedin:
-                a(href=settingGeneral.linkedin)= settingGeneral.linkedin
-        .socials-facebook
-            strong Facebook:
-                a(href=settingGeneral.facebook)= settingGeneral.facebook
+            .footer-col
+                h4 !{settingGeneral.map}
 
 
-    .footer-map !{settingGeneral.map}

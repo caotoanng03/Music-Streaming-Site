@@ -8,6 +8,7 @@ const settingGeneralSchema = new mongoose.Schema({
     address: String,
     map: String,
     instagram: String,
+    twitter: String,
     linkedin: String,
     facebook: String,
     copyright: String

@@ -12,6 +12,7 @@ const settingGeneralSchema = new mongoose_1.default.Schema({
     address: String,
     map: String,
     instagram: String,
+    twitter: String,
     linkedin: String,
     facebook: String,
     copyright: String

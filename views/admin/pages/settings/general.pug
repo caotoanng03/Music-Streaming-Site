@@ -84,6 +84,17 @@ block main
                 name="instagram"
                 value=(settingGeneral ? settingGeneral.instagram : "")
             )
+
+        div(class="form-group")
+            label(for="twitter") Twitter URL
+            input(
+                type="text"
+                class="form-control"
+                id="twitter"
+                name="twitter"
+                value=(settingGeneral ? settingGeneral.twitter : "")
+            )
+
         div(class="form-group")
             label(for="linkedin") Linkedin URL
             input(
