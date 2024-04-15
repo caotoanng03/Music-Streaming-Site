@@ -5,6 +5,7 @@ import flash from "express-flash"
 import cookieParser from "cookie-parser"
 import session from "express-session"
 import methodOverride from "method-override";
+import moment from "moment";
 import * as database from "./config/database";
 
 import adminRoutes from "./routes/admin/index.route";
@@ -45,6 +46,7 @@ app.use(
 
 // App local varialbles
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 // Admin Routes
 adminRoutes(app);

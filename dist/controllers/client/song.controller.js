@@ -32,7 +32,7 @@ const list = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         topicId: genre.id,
         status: "active",
         deleted: "false"
-    }).select("title avatar singerId like slug");
+    }).select("title avatar singerId like slug createdAt");
     for (const song of songs) {
         const singerInfo = yield singer_model_1.default.findOne({
             _id: song.singerId,

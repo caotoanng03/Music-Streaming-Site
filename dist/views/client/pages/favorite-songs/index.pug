@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/moment.pug
 
 block main
     .container.my-3
@@ -20,4 +21,6 @@ block main
                             div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.singerInfo.fullName}
                             div(class="inner-heart active" button-favorite=item.songId)
                                 <i class="fa-regular fa-heart"></i> Favorite
-                            div(class="inner-time") <i class="fa-regular fa-clock"></i> 20/10/2023
+                            div(class="inner-time") 
+                                <i class="fa-regular fa-clock"></i> 
+                                    +formatDate(item.songInfo.createdAt)
